@@ -2,6 +2,26 @@
 
 基于 Vue 3、Flask 和 RAG（检索增强生成）的毕业设计项目，集患者信息管理、电子病历管理和医疗知识库问答于一体。系统支持电脑与手机浏览器访问，可通过 Docker Compose 部署，也可在本机分别启动前后端。
 
+## 评审交付入口
+
+- 技术文档（PDF，30 页以内）：[智慧医疗系统技术文档](output/pdf/智慧医疗系统技术文档.pdf)。
+- 演示视频（MP4，1920×1080，普通话讲解与字幕）：[项目演示](output/video/智慧医疗系统演示.mp4)。
+- [交付检查清单](docs/交付检查清单.md)：材料位置、验证结果及仍需处理的事项。
+- [演示说明](docs/演示视频与复现.md)：章节、录制方法、测试账号和合成资料说明。
+- [GitHub 提交说明](docs/GitHub提交说明.md)：发布、评审访问和真实 Git 历史说明。
+
+代码托管使用 GitHub，目标仓库名称为 `gaoqiuyu9579/RAG-medical-system`，中文项目名为“RAG医疗系统”。实际公开访问及发布结果以交付清单为准。公网在线演示按团队决定不纳入本次提交。
+
+## 团队信息
+
+项目负责人：**高秋雨**。项目成员：高秋雨、栾子璇、郝崇泽。
+
+| 成员 | 分工 |
+| --- | --- |
+| 高秋雨（负责人） | 需求分析、总体架构设计、后端核心模块、数据库设计、项目部署、版本管理、论文与核心技术文档编写，统筹项目进度 |
+| 郝崇泽 | 前端页面开发、组件封装、页面样式、前后端接口联调 |
+| 栾子璇 | 功能测试、Bug 记录与回归测试、辅助撰写用户手册、素材整理 |
+
 ## 主要功能
 
 | 模块 | 已实现功能 |
@@ -125,6 +145,16 @@ npm run dev
 本机业务数据保存在 `.env` 指定的 MySQL 中，知识库存放于 `backend/chroma_db/`，自动生成的签名密钥存放于 `instance/`。Docker 使用独立的 `mysql_data`、`chroma_data` 和 `instance_data` 命名卷，不会自动导入本机旧数据。
 
 ## 测试与维护
+
+开发检查工具安装：`.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt`。
+Python 使用 Ruff 统一格式，配置见 `pyproject.toml`；编码、缩进与换行规则见 `.editorconfig`。命名使用 Python snake_case 与 Vue 现有约定；注释解释业务约束、兼容处理和外部调用边界。提交前运行：
+
+```powershell
+.\.venv\Scripts\ruff.exe check backend deploy tests scripts
+.\.venv\Scripts\ruff.exe format --check backend deploy tests scripts
+```
+
+GitHub Actions 工作流覆盖格式检查、后端测试、前端测试、构建和桌面/移动浏览器回归；外部 AI 密钥不用于 CI。首次推送后的云端执行结果需在仓库 Actions 页面查看。
 
 后端回归测试使用独立测试数据库，前端浏览器测试使用独立测试目录。安装依赖后，在项目根目录执行：
 

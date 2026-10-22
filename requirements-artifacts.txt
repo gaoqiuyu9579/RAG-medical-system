@@ -1,0 +1,5 @@
+# 只用于重建技术 PDF 和演示视频，不属于应用运行依赖。
+reportlab==5.0.1
+Pillow==12.3.0
+pypdf==6.21.2
+imageio-ffmpeg==0.6.0
