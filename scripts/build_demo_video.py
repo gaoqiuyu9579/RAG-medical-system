@@ -260,7 +260,7 @@ def main():
         f"{i}\n{stamp(start)} --> {stamp(end)}\n{text}"
         for i, (start, end, text) in enumerate(srt, 1)
     )
-    (VIDEO / "智慧医疗系统演示.srt").write_text(srt_text + "\n", encoding="utf-8-sig")
+    (VIDEO / "智慧医疗系统演示.srt").write_text(srt_text + "\n", encoding="utf-8-sig", newline="\n")
     probe = imageio_ffmpeg.read_frames(str(destination))
     try:
         container_seconds = next(probe)["duration"]

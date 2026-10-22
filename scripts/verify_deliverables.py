@@ -115,7 +115,11 @@ def main():
                 base + "/contents/" + urllib.parse.quote(relative), timeout=20
             ) as response:
                 info = json.load(response)
-            if info["size"] != (ROOT / relative).stat().st_size or not info["download_url"]:
+            # 以已提交 blob 为准，兼容 Windows 工作区文本的 CRLF / LF 转换。
+            committed_size = int(
+                subprocess.check_output(["git", "cat-file", "-s", "HEAD:" + relative], cwd=ROOT)
+            )
+            if info["size"] != committed_size or not info["download_url"]:
                 raise ValueError("Public asset missing or out of date: " + relative)
         result["github"] = repository["html_url"]
         result["public_assets"] = "PDF / MP4 / SRT verified anonymously"
