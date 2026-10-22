@@ -9,7 +9,10 @@ from backend.utils.validation import ApiError
 class MedicalService:
     @staticmethod
     def list_record():
-        return [record.to_dict() for record in MedicalRecord.query.order_by(MedicalRecord.id.desc()).all()]
+        return [
+            record.to_dict()
+            for record in MedicalRecord.query.order_by(MedicalRecord.id.desc()).all()
+        ]
 
     @staticmethod
     def add_record(data):

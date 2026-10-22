@@ -53,11 +53,17 @@ def user_list():
 def stats():
     today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     tomorrow = today + timedelta(days=1)
-    return jsonify(success({
-        "patientCount": db.session.query(func.count(Patient.id)).scalar(),
-        "recordCount": db.session.query(func.count(MedicalRecord.id)).scalar(),
-        "todayVisit": db.session.query(func.count(MedicalRecord.id)).filter(
-            MedicalRecord.record_time >= today,
-            MedicalRecord.record_time < tomorrow,
-        ).scalar(),
-    }))
+    return jsonify(
+        success(
+            {
+                "patientCount": db.session.query(func.count(Patient.id)).scalar(),
+                "recordCount": db.session.query(func.count(MedicalRecord.id)).scalar(),
+                "todayVisit": db.session.query(func.count(MedicalRecord.id))
+                .filter(
+                    MedicalRecord.record_time >= today,
+                    MedicalRecord.record_time < tomorrow,
+                )
+                .scalar(),
+            }
+        )
+    )

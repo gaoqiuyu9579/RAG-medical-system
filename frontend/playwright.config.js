@@ -9,7 +9,7 @@ export default defineConfig({
   reporter: [['list'], ['json', { outputFile: 'test-results/results.json' }]],
   use: {
     baseURL: 'http://127.0.0.1:5501',
-    channel: 'msedge',
+    channel: process.env.CI ? undefined : 'msedge',
     headless: true,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure'
@@ -19,7 +19,9 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'], defaultBrowserType: 'chromium' } }
   ],
   webServer: {
-    command: '..\\.venv\\Scripts\\python.exe ..\\tests\\e2e_server.py',
+    command: process.platform === 'win32'
+      ? '..\\.venv\\Scripts\\python.exe ..\\tests\\e2e_server.py'
+      : '../.venv/bin/python ../tests/e2e_server.py',
     url: 'http://127.0.0.1:5501/api/health',
     timeout: 120000,
     reuseExistingServer: false

@@ -4,7 +4,13 @@ import io
 
 import pdfplumber
 from flask import Blueprint, current_app, jsonify, request
-from openai import APIConnectionError, APIStatusError, APITimeoutError, AuthenticationError, RateLimitError
+from openai import (
+    APIConnectionError,
+    APIStatusError,
+    APITimeoutError,
+    AuthenticationError,
+    RateLimitError,
+)
 
 from backend.service.rag_service import RagService
 from backend.utils.response import success
@@ -54,8 +60,9 @@ def status():
 
 @rag_bp.route("/upload", methods=["POST"])
 def upload():
-    text = text_field(json_body(), "text", "知识文本",
-                      current_app.config["MAX_KNOWLEDGE_CHARS"], required=True)
+    text = text_field(
+        json_body(), "text", "知识文本", current_app.config["MAX_KNOWLEDGE_CHARS"], required=True
+    )
     result = rag_call(lambda: RagService.upload_text(text))
     return jsonify(success(result, "知识库构建成功"))
 
@@ -69,15 +76,20 @@ def upload_file():
     if not filename.lower().endswith(ALLOWED_EXTENSIONS):
         raise ApiError("仅支持 .txt、.md、.json、.csv、.pdf 格式")
     try:
-        text = extract_pdf_text(file) if filename.lower().endswith(".pdf") else file.read().decode("utf-8-sig")
+        text = (
+            extract_pdf_text(file)
+            if filename.lower().endswith(".pdf")
+            else file.read().decode("utf-8-sig")
+        )
     except ApiError:
         raise
     except UnicodeDecodeError:
         raise ApiError("文件编码不支持，请使用 UTF-8 编码") from None
     except Exception:
         raise ApiError("文件无法解析，请检查 PDF 是否损坏或加密") from None
-    text = text_field({"text": text}, "text", "文件内容",
-                      current_app.config["MAX_KNOWLEDGE_CHARS"], required=True)
+    text = text_field(
+        {"text": text}, "text", "文件内容", current_app.config["MAX_KNOWLEDGE_CHARS"], required=True
+    )
     result = rag_call(lambda: RagService.upload_text(text, filename))
     return jsonify(success(result, "文件知识库构建成功"))
 

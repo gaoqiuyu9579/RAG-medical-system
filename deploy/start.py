@@ -18,13 +18,15 @@ def bootstrap_admin(app):
         if User.query.filter_by(username=username).first() is None:
             text_field({"username": username}, "username", "用户名", 50, required=True)
             password_field({"password": password}, "password", new=True)
-            db.session.add(User(
-                username=username,
-                password=hash_password(password),
-                real_name="演示管理员",
-                role="admin",
-                status=1,
-            ))
+            db.session.add(
+                User(
+                    username=username,
+                    password=hash_password(password),
+                    real_name="演示管理员",
+                    role="admin",
+                    status=1,
+                )
+            )
             db.session.commit()
             print(f"已初始化演示账号 {username}", flush=True)
 

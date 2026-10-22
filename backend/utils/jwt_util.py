@@ -23,11 +23,17 @@ def create_token(user_id, password_hash):
 def verify_token(token):
     try:
         payload = jwt.decode(
-            token, current_app.config["SECRET_KEY"], algorithms=["HS256"],
+            token,
+            current_app.config["SECRET_KEY"],
+            algorithms=["HS256"],
             options={"require": ["exp", "user_id", "pwd"]},
         )
         user_id = payload["user_id"]
-        if isinstance(user_id, bool) or not isinstance(user_id, int) or not 0 < user_id <= 9223372036854775807:
+        if (
+            isinstance(user_id, bool)
+            or not isinstance(user_id, int)
+            or not 0 < user_id <= 9223372036854775807
+        ):
             return None
         if not isinstance(payload["pwd"], str):
             return None

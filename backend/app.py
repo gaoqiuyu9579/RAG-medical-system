@@ -49,7 +49,8 @@ def create_app(config=None):
             app.logger.warning(
                 "历史数据待核对：重复患者编号 %s 组，未关联患者的病历 %s 条。"
                 "已保留原数据，暂缓添加受影响的数据库约束；新增数据仍执行关联和编号校验。",
-                schema_status["duplicate_number_groups"], schema_status["orphan_records"],
+                schema_status["duplicate_number_groups"],
+                schema_status["orphan_records"],
             )
 
     @app.before_request
@@ -67,8 +68,11 @@ def create_app(config=None):
             raise ApiError("请先登录", 401)
         payload = verify_token(auth[7:])
         user = db.session.get(User, payload["user_id"]) if payload else None
-        if (user is None or user.status != 1 or
-                not hmac.compare_digest(payload["pwd"], password_version(user.password))):
+        if (
+            user is None
+            or user.status != 1
+            or not hmac.compare_digest(payload["pwd"], password_version(user.password))
+        ):
             raise ApiError("登录已失效，请重新登录", 401)
         g.current_user = user
 
@@ -85,8 +89,13 @@ def create_app(config=None):
 
     @app.errorhandler(HTTPException)
     def http_error(exc):
-        messages = {400: "请求格式错误", 404: "地址不存在", 405: "请求方法不支持",
-                    413: "上传内容超过16 MB限制", 415: "请求格式不支持"}
+        messages = {
+            400: "请求格式错误",
+            404: "地址不存在",
+            405: "请求方法不支持",
+            413: "上传内容超过16 MB限制",
+            415: "请求格式不支持",
+        }
         return jsonify(error(messages.get(exc.code, "请求失败"), exc.code)), exc.code
 
     @app.errorhandler(SQLAlchemyError)

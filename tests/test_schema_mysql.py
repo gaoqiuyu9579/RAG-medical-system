@@ -23,17 +23,24 @@ class LegacySchemaTests(unittest.TestCase):
         with self.root_engine.connect() as connection:
             connection.execute(text(f"CREATE DATABASE `{self.name}` CHARACTER SET utf8mb4"))
         self.addCleanup(self.cleanup_database)
-        self.config = {"TESTING": True, "SECRET_KEY": "legacy-test-secret-with-at-least-32-characters",
-                       "SQLALCHEMY_DATABASE_URI": Config.SQLALCHEMY_DATABASE_URI.set(database=self.name)}
+        self.config = {
+            "TESTING": True,
+            "SECRET_KEY": "legacy-test-secret-with-at-least-32-characters",
+            "SQLALCHEMY_DATABASE_URI": Config.SQLALCHEMY_DATABASE_URI.set(database=self.name),
+        }
         self.app = create_app(self.config)
         with self.app.app_context():
             inspector = inspect(db.engine)
             with db.engine.begin() as connection:
                 for item in inspector.get_foreign_keys("medical_record"):
-                    connection.execute(text("ALTER TABLE medical_record DROP FOREIGN KEY `" + item["name"] + "`"))
+                    connection.execute(
+                        text("ALTER TABLE medical_record DROP FOREIGN KEY `" + item["name"] + "`")
+                    )
                 for item in inspector.get_unique_constraints("patient"):
                     if item["column_names"] == ["patient_no"]:
-                        connection.execute(text("ALTER TABLE patient DROP INDEX `" + item["name"] + "`"))
+                        connection.execute(
+                            text("ALTER TABLE patient DROP INDEX `" + item["name"] + "`")
+                        )
 
     def cleanup_database(self):
         with self.app.app_context():
@@ -55,8 +62,10 @@ class LegacySchemaTests(unittest.TestCase):
             return ensure_constraints()
 
     def test_orphan_records_do_not_prevent_startup_or_get_reassigned(self):
-        self.execute("INSERT INTO patient (id,patient_no,name) VALUES (4,'P4','合成患者')",
-                     "INSERT INTO medical_record (id,patient_id,diagnosis) VALUES (1,1,'合成记录'),(2,2,'合成记录'),(7,1,'合成记录')")
+        self.execute(
+            "INSERT INTO patient (id,patient_no,name) VALUES (4,'P4','合成患者')",
+            "INSERT INTO medical_record (id,patient_id,diagnosis) VALUES (1,1,'合成记录'),(2,2,'合成记录'),(7,1,'合成记录')",
+        )
         app = create_app(self.config)
         status = app.extensions["schema_status"]
         self.assertEqual(status["orphan_records"], 3)
@@ -64,14 +73,18 @@ class LegacySchemaTests(unittest.TestCase):
         self.assertFalse(status["medical_patient_foreign_key"])
         self.assertEqual(app.test_client().get("/api/health").status_code, 200)
         with app.app_context():
-            rows = list(db.session.execute(text("SELECT id,patient_id FROM medical_record ORDER BY id")))
+            rows = list(
+                db.session.execute(text("SELECT id,patient_id FROM medical_record ORDER BY id"))
+            )
             self.assertEqual([tuple(row) for row in rows], [(1, 1), (2, 2), (7, 1)])
             self.assertEqual(db.session.execute(text("SELECT COUNT(*) FROM patient")).scalar(), 1)
             with self.assertRaises(ApiError):
                 MedicalService.add_record({"patient_id": 999, "diagnosis": "拒绝新增孤立记录"})
 
     def test_duplicate_numbers_only_defer_unique_constraint(self):
-        self.execute("INSERT INTO patient (id,patient_no,name) VALUES (1,'DUP','测试一'),(2,'DUP','测试二')")
+        self.execute(
+            "INSERT INTO patient (id,patient_no,name) VALUES (1,'DUP','测试一'),(2,'DUP','测试二')"
+        )
         app = create_app(self.config)
         status = app.extensions["schema_status"]
         self.assertEqual(status["duplicate_number_groups"], 1)
@@ -79,16 +92,25 @@ class LegacySchemaTests(unittest.TestCase):
         self.assertTrue(status["medical_patient_foreign_key"])
         self.assertEqual(app.test_client().get("/api/health").status_code, 200)
         with app.app_context():
-            self.assertEqual(db.session.execute(text("SELECT COUNT(*) FROM patient WHERE patient_no='DUP'")).scalar(), 2)
+            self.assertEqual(
+                db.session.execute(
+                    text("SELECT COUNT(*) FROM patient WHERE patient_no='DUP'")
+                ).scalar(),
+                2,
+            )
 
     def test_constraints_are_applied_after_conflicts_are_resolved(self):
-        self.execute("INSERT INTO patient (id,patient_no) VALUES (1,'DUP'),(2,'DUP')",
-                     "INSERT INTO medical_record (id,patient_id) VALUES (1,999)")
+        self.execute(
+            "INSERT INTO patient (id,patient_no) VALUES (1,'DUP'),(2,'DUP')",
+            "INSERT INTO medical_record (id,patient_id) VALUES (1,999)",
+        )
         initial = self.inspect_status()
         self.assertFalse(initial["patient_number_unique"])
         self.assertFalse(initial["medical_patient_foreign_key"])
-        self.execute("UPDATE patient SET patient_no='P2' WHERE id=2",
-                     "UPDATE medical_record SET patient_id=1 WHERE id=1")
+        self.execute(
+            "UPDATE patient SET patient_no='P2' WHERE id=2",
+            "UPDATE medical_record SET patient_id=1 WHERE id=1",
+        )
         repaired = self.inspect_status()
         self.assertTrue(repaired["patient_number_unique"])
         self.assertTrue(repaired["medical_patient_foreign_key"])

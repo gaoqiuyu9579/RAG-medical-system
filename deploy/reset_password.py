@@ -20,7 +20,9 @@ def main():
         if user is None:
             parser.exit(1, "账号不存在\n")
         try:
-            password = password_field({"password": getpass("新密码（8到128个字符）: ")}, "password", new=True)
+            password = password_field(
+                {"password": getpass("新密码（8到128个字符）: ")}, "password", new=True
+            )
         except ApiError as exc:
             parser.exit(1, exc.message + "\n")
         if password != getpass("再次输入新密码: "):

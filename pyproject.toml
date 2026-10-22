@@ -1,0 +1,9 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = ["backups", "output", "tmp", ".test-artifacts"]
+
+[tool.ruff.lint]
+# 先守住语法、未使用变量和导入问题；项目入口为直接运行脚本保留路径初始化。
+select = ["E4", "E7", "E9", "F"]
+ignore = ["E402"]

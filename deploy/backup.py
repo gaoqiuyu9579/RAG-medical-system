@@ -24,17 +24,32 @@ def main():
         docker("pause", "app", capture_output=True)
         paused = True
         with (target / "mysql.sql").open("wb") as stream:
-            docker("exec", "-T", "mysql", "sh", "-c",
-                   'exec mysqldump --single-transaction --no-tablespaces --set-gtid-purged=OFF -uroot -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE"',
-                   stdout=stream, stderr=subprocess.PIPE)
-        subprocess.run(["docker", "cp", container + ":/app/backend/chroma_db", str(target / "chroma_db")],
-                       check=True, capture_output=True)
+            docker(
+                "exec",
+                "-T",
+                "mysql",
+                "sh",
+                "-c",
+                'exec mysqldump --single-transaction --no-tablespaces --set-gtid-purged=OFF -uroot -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE"',
+                stdout=stream,
+                stderr=subprocess.PIPE,
+            )
+        subprocess.run(
+            ["docker", "cp", container + ":/app/backend/chroma_db", str(target / "chroma_db")],
+            check=True,
+            capture_output=True,
+        )
         # 旧镜像没有 instance 目录；新镜像需一并保存签名密钥。
-        instance = subprocess.run(["docker", "cp", container + ":/app/instance", str(target / "instance")],
-                                  capture_output=True)
-        metadata = {"created": datetime.now().isoformat(), "instance_included": instance.returncode == 0,
-                    "mysql_bytes": (target / "mysql.sql").stat().st_size,
-                    "chroma_files": sum(1 for path in (target / "chroma_db").rglob("*") if path.is_file())}
+        instance = subprocess.run(
+            ["docker", "cp", container + ":/app/instance", str(target / "instance")],
+            capture_output=True,
+        )
+        metadata = {
+            "created": datetime.now().isoformat(),
+            "instance_included": instance.returncode == 0,
+            "mysql_bytes": (target / "mysql.sql").stat().st_size,
+            "chroma_files": sum(1 for path in (target / "chroma_db").rglob("*") if path.is_file()),
+        }
         if not metadata["mysql_bytes"]:
             raise RuntimeError("数据库备份为空")
         (target / "manifest.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")

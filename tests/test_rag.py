@@ -27,14 +27,21 @@ class LocalEmbedding(Embeddings):
 
 class RagTests(unittest.TestCase):
     def setUp(self):
-        self.folder = Path(__file__).resolve().parents[1] / ".test-artifacts" / ("rag-" + uuid.uuid4().hex)
+        self.folder = (
+            Path(__file__).resolve().parents[1] / ".test-artifacts" / ("rag-" + uuid.uuid4().hex)
+        )
         self.folder.mkdir(parents=True)
         self.path_patch = patch.object(vectors, "VECTOR_PATH", str(self.folder / "chroma"))
         self.path_patch.start()
         self.embedding_patch = patch.object(vectors, "get_embedding", return_value=LocalEmbedding())
         self.embedding = self.embedding_patch.start()
-        self.app = create_app({"TESTING": True, "SECRET_KEY": "rag-test-secret-32-characters-minimum",
-                               "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"})
+        self.app = create_app(
+            {
+                "TESTING": True,
+                "SECRET_KEY": "rag-test-secret-32-characters-minimum",
+                "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            }
+        )
         self.context = self.app.app_context()
         self.context.push()
 
@@ -57,30 +64,44 @@ class RagTests(unittest.TestCase):
         self.assertEqual(results[0].metadata["source"], "test.txt")
 
     def test_failed_embedding_does_not_write_partial_documents(self):
-        self.embedding.return_value.embed_documents = lambda _: (_ for _ in ()).throw(RuntimeError("test failure"))
+        self.embedding.return_value.embed_documents = lambda _: (_ for _ in ()).throw(
+            RuntimeError("test failure")
+        )
         with self.assertRaises(RuntimeError):
             vectors.create_vector_store("较长的测试资料。" * 200)
         self.assertEqual(vectors.knowledge_status()["chunks"], 0)
         self.assertIsNone(vectors.load_vector_store())
 
     def test_empty_existing_collection_does_not_invoke_embedding(self):
-        vectors.vector_client().get_or_create_collection(vectors.COLLECTION_NAME, embedding_function=None)
+        vectors.vector_client().get_or_create_collection(
+            vectors.COLLECTION_NAME, embedding_function=None
+        )
         self.embedding.reset_mock()
         self.assertIsNone(vectors.load_vector_store())
         self.embedding.assert_not_called()
 
     def test_existing_legacy_collection_can_be_loaded(self):
-        collection = vectors.vector_client().get_or_create_collection("langchain", embedding_function=None)
-        collection.add(ids=["legacy-uuid"], documents=["既有资料"],
-                       embeddings=[LocalEmbedding().embed_query("既有资料")])
-        self.assertEqual(vectors.load_vector_store().similarity_search("既有资料", k=1)[0].page_content, "既有资料")
+        collection = vectors.vector_client().get_or_create_collection(
+            "langchain", embedding_function=None
+        )
+        collection.add(
+            ids=["legacy-uuid"],
+            documents=["既有资料"],
+            embeddings=[LocalEmbedding().embed_query("既有资料")],
+        )
+        self.assertEqual(
+            vectors.load_vector_store().similarity_search("既有资料", k=1)[0].page_content,
+            "既有资料",
+        )
 
     def test_question_uses_retrieved_context_and_returns_sources(self):
         vectors.create_vector_store("演示资料编号 MED-DEMO-01", "source.txt")
         prompts = []
+
         def answer(prompt):
             prompts.append(prompt.to_string())
             return AIMessage(content="编号为 MED-DEMO-01")
+
         with patch("backend.rag.qa_chain.get_llm", return_value=RunnableLambda(answer)):
             result = ask_medical_question("编号是什么？")
         self.assertEqual(result["sources"], ["source.txt"])

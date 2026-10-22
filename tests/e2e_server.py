@@ -34,12 +34,14 @@ vectors.VECTOR_PATH = str(artifacts / "chroma")
 vectors.get_embedding = lambda: TestEmbedding()
 qa.get_llm = lambda: RunnableLambda(lambda _: AIMessage(content="演示资料编号为 MED-DEMO-01。"))
 
-app = create_app({
-    "SQLALCHEMY_DATABASE_URI": "sqlite:///" + (artifacts / "business.sqlite3").as_posix(),
-    "SECRET_KEY": "isolated-browser-test-key-not-for-production",
-    "DASHSCOPE_API_KEY": "",
-    "DEEPSEEK_API_KEY": "",
-})
+app = create_app(
+    {
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///" + (artifacts / "business.sqlite3").as_posix(),
+        "SECRET_KEY": "isolated-browser-test-key-not-for-production",
+        "DASHSCOPE_API_KEY": "",
+        "DEEPSEEK_API_KEY": "",
+    }
+)
 
 
 def reset():
@@ -47,8 +49,15 @@ def reset():
         db.session.remove()
         db.drop_all()
         db.create_all()
-        db.session.add(User(username="e2e-admin", password=hash_password("E2ePassword123"),
-                            role="admin", status=1, real_name="测试管理员"))
+        db.session.add(
+            User(
+                username="e2e-admin",
+                password=hash_password("E2ePassword123"),
+                role="admin",
+                status=1,
+                real_name="测试管理员",
+            )
+        )
         db.session.commit()
         collection = vectors.existing_collection()
         if collection is not None:

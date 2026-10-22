@@ -13,14 +13,30 @@ def compose(*args, **kwargs):
 
 
 def sql(statement):
-    compose("exec", "-T", "mysql", "sh", "-c", 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"',
-            input=statement.encode(), capture_output=True)
+    compose(
+        "exec",
+        "-T",
+        "mysql",
+        "sh",
+        "-c",
+        'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"',
+        input=statement.encode(),
+        capture_output=True,
+    )
 
 
 def main():
     name = "medical_test_" + uuid.uuid4().hex
-    user = compose("exec", "-T", "app", "python", "-c", "import os; print(os.environ['MYSQL_USER'])",
-                   capture_output=True, text=True).stdout.strip()
+    user = compose(
+        "exec",
+        "-T",
+        "app",
+        "python",
+        "-c",
+        "import os; print(os.environ['MYSQL_USER'])",
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
     if not re.fullmatch(r"[A-Za-z0-9_]+", user):
         raise RuntimeError("测试脚本只支持字母数字下划线数据库用户名")
     created = False
@@ -28,9 +44,19 @@ def main():
         sql(f"CREATE DATABASE `{name}` CHARACTER SET utf8mb4;")
         created = True
         sql(f"GRANT ALL PRIVILEGES ON `{name}`.* TO '{user}'@'%';")
-        result = compose("run", "--rm", "--no-deps", "-T", "-e", "MYSQL_DATABASE=" + name,
-                         "app", "python", "-", input=(ROOT / "deploy/mysql_smoke.py").read_bytes(),
-                         capture_output=True)
+        result = compose(
+            "run",
+            "--rm",
+            "--no-deps",
+            "-T",
+            "-e",
+            "MYSQL_DATABASE=" + name,
+            "app",
+            "python",
+            "-",
+            input=(ROOT / "deploy/mysql_smoke.py").read_bytes(),
+            capture_output=True,
+        )
         print(result.stdout.decode("utf-8"))
     finally:
         if created:

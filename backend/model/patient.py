@@ -2,7 +2,6 @@
 患者模型
 """
 
-
 from backend.config.database import db
 
 
@@ -29,5 +28,5 @@ class Patient(db.Model):
             "phone": self.phone,
             "address": self.address,
             "medical_history": self.medical_history,
-            "create_time": str(self.create_time) if self.create_time else None
+            "create_time": str(self.create_time) if self.create_time else None,
         }

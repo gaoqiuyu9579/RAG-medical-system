@@ -25,6 +25,10 @@ backups/
 frontend/e2e-run.log
 *_prompt.json
 *.db
+/tmp/
+/output/video/raw/
+/output/video/audio/
+/output/video/segments/
 
 *demo.txt
 *demo.pdf

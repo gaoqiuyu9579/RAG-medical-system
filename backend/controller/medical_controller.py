@@ -18,8 +18,9 @@ def list_record():
 def add_record():
     data = json_body()
     fields = {
-        "patient_id": integer_field(data, "patient_id", "患者ID", minimum=1,
-                                    maximum=9223372036854775807, required=True),
+        "patient_id": integer_field(
+            data, "patient_id", "患者ID", minimum=1, maximum=9223372036854775807, required=True
+        ),
         "doctor_name": text_field(data, "doctor_name", "医生姓名", 50),
         "diagnosis": text_field(data, "diagnosis", "诊断", 255),
         "symptom": text_field(data, "symptom", "症状", 20000),

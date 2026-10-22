@@ -13,7 +13,8 @@ async function navigate(page, label) {
   if (await menuButton.isVisible()) await menuButton.click()
   await page.getByRole('menuitem', { name: new RegExp(label) }).click()
   if (await menuButton.isVisible()) {
-    await expect.poll(() => page.evaluate(() => document.querySelector('.aside')?.getBoundingClientRect().right ?? 0)).toBeLessThanOrEqual(1)
+    // 401 可能同时跳转登录页；Locator 断言会重试，不读取已销毁的页面执行环境。
+    await expect(page.locator('.aside.mobile-open')).toHaveCount(0)
   }
 }
 

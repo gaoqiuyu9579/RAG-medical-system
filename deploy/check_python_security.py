@@ -37,7 +37,11 @@ def check(item):
     try:
         with urlopen(f"https://pypi.org/pypi/{name}/{version}/json", timeout=20) as response:
             data = json.load(response)
-        return {"name": name, "version": version, "vulnerabilities": data.get("vulnerabilities", [])}
+        return {
+            "name": name,
+            "version": version,
+            "vulnerabilities": data.get("vulnerabilities", []),
+        }
     except Exception as exc:
         return {"name": name, "version": version, "error": type(exc).__name__}
 
@@ -51,8 +55,28 @@ if __name__ == "__main__":
     destination.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     vulnerable = [item for item in results if item.get("vulnerabilities")]
     failed = [item for item in results if item.get("error")]
-    print(json.dumps({"checked": len(results), "vulnerable": [{
-        "name": item["name"], "version": item["version"],
-        "advisories": [{"id": entry["id"], "fixed_versions": entry.get("fixed_in", []),
-                        "summary": entry.get("summary", "")} for entry in item["vulnerabilities"]],
-    } for item in vulnerable], "failed": failed}, ensure_ascii=False, indent=2))
+    print(
+        json.dumps(
+            {
+                "checked": len(results),
+                "vulnerable": [
+                    {
+                        "name": item["name"],
+                        "version": item["version"],
+                        "advisories": [
+                            {
+                                "id": entry["id"],
+                                "fixed_versions": entry.get("fixed_in", []),
+                                "summary": entry.get("summary", ""),
+                            }
+                            for entry in item["vulnerabilities"]
+                        ],
+                    }
+                    for item in vulnerable
+                ],
+                "failed": failed,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )

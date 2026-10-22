@@ -51,12 +51,22 @@ with app.app_context():
         raise RuntimeError('No active account available for read-only verification')
     print(create_token(user.id, user.password))
 """
-    result = subprocess.run(["docker", "compose", "exec", "-T", "app", "python", "-"],
-                            cwd=ROOT, input=code.encode(), capture_output=True, check=True)
+    result = subprocess.run(
+        ["docker", "compose", "exec", "-T", "app", "python", "-"],
+        cwd=ROOT,
+        input=code.encode(),
+        capture_output=True,
+        check=True,
+    )
     token = result.stdout.decode().strip()
     if "--restart" in sys.argv:
-        subprocess.run(["docker", "compose", "restart", "app"], cwd=ROOT,
-                       capture_output=True, check=True, timeout=60)
+        subprocess.run(
+            ["docker", "compose", "restart", "app"],
+            cwd=ROOT,
+            capture_output=True,
+            check=True,
+            timeout=60,
+        )
         deadline = time.monotonic() + 60
         while True:
             try:
@@ -66,12 +76,26 @@ with app.app_context():
                 if time.monotonic() >= deadline:
                     raise
                 time.sleep(1)
-    for path in ("/api/user/me", "/api/user/stats", "/api/patient/list", "/api/medical/list", "/api/rag/status"):
+    for path in (
+        "/api/user/me",
+        "/api/user/stats",
+        "/api/patient/list",
+        "/api/medical/list",
+        "/api/rag/status",
+    ):
         response = json.loads(get(path, token=token))
         assert response["code"] == 200
     get("/api/user/me", 401, token="invalid-token")
-    print(json.dumps({"deployment": "passed", "frontend_assets": len(assets), "authenticated_reads": 5,
-                      "pre_restart_token_preserved": "--restart" in sys.argv}))
+    print(
+        json.dumps(
+            {
+                "deployment": "passed",
+                "frontend_assets": len(assets),
+                "authenticated_reads": 5,
+                "pre_restart_token_preserved": "--restart" in sys.argv,
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

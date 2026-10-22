@@ -32,12 +32,16 @@ class Config:
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     MAX_KNOWLEDGE_CHARS = 200000
     MAX_PDF_PAGES = 200
-    CORS_ORIGINS = [value.strip() for value in os.getenv(
-        "CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173"
-    ).split(",") if value.strip()]
+    CORS_ORIGINS = [
+        value.strip()
+        for value in os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(
+            ","
+        )
+        if value.strip()
+    ]
     DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
     DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL") or "https://api.deepseek.com/v1"
     DASHSCOPE_API_KEY = os.getenv("DASHSCOPE_API_KEY", "")
-    DASHSCOPE_BASE_URL = os.getenv("DASHSCOPE_BASE_URL") or "https://dashscope.aliyuncs.com/compatible-mode/v1"
-
-
+    DASHSCOPE_BASE_URL = (
+        os.getenv("DASHSCOPE_BASE_URL") or "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    )
