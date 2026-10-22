@@ -1,0 +1,67 @@
+name: smart-medical
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: ${DOCKER_MYSQL_ROOT_PASSWORD:-medical-root-local}
+      MYSQL_DATABASE: ${DOCKER_MYSQL_DATABASE:-smart_medical}
+      MYSQL_USER: ${DOCKER_MYSQL_USER:-medical_app}
+      MYSQL_PASSWORD: ${DOCKER_MYSQL_PASSWORD:-medical-app-local}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'mysql --protocol=TCP -h127.0.0.1 -u"$${MYSQL_USER}" -p"$${MYSQL_PASSWORD}" "$${MYSQL_DATABASE}" -e "SELECT 1" >/dev/null 2>&1'
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    init: true
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "0.0.0.0:${DOCKER_HTTP_PORT:-8080}:5000"
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_HOST: mysql
+      MYSQL_PORT: "3306"
+      MYSQL_USER: ${DOCKER_MYSQL_USER:-medical_app}
+      MYSQL_PASSWORD: ${DOCKER_MYSQL_PASSWORD:-medical-app-local}
+      MYSQL_DATABASE: ${DOCKER_MYSQL_DATABASE:-smart_medical}
+      SECRET_KEY: ${SECRET_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com/v1}
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      DASHSCOPE_BASE_URL: ${DASHSCOPE_BASE_URL:-https://dashscope.aliyuncs.com/compatible-mode/v1}
+      BOOTSTRAP_ADMIN_USERNAME: ${DOCKER_ADMIN_USERNAME:-admin}
+      BOOTSTRAP_ADMIN_PASSWORD: ${DOCKER_ADMIN_PASSWORD:-Admin123456}
+    volumes:
+      - chroma_data:/app/backend/chroma_db
+      - instance_data:/app/instance
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:5000/api/health", timeout=3).close()'
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+volumes:
+  mysql_data:
+  chroma_data:
+  instance_data:
