@@ -1,0 +1,54 @@
+{
+  "recorded_at_utc": "2026-10-22T05:36:27.220Z",
+  "ai_mode": "real-configured-clients",
+  "business_database": "isolated SQLite; deployment uses MySQL",
+  "events": [
+    {
+      "scene": "03",
+      "login_and_home": "passed"
+    },
+    {
+      "scene": "04",
+      "patient_creation": "passed"
+    },
+    {
+      "scene": "05",
+      "medical_record_creation": "passed"
+    },
+    {
+      "scene": "06",
+      "related_patient_delete_status": 409
+    },
+    {
+      "scene": "07",
+      "upload": {
+        "added": 1,
+        "total": 1
+      },
+      "status": 200
+    },
+    {
+      "scene": "07",
+      "duplicate_upload": {
+        "added": 0,
+        "total": 1
+      }
+    },
+    {
+      "scene": "08",
+      "status": 200,
+      "answer": "根据参考资料：\n\n- **开放时间**：周一至周五，上午九点至下午五点。\n- **登记材料**：预约编号、随访登记表。\n\n如果材料不齐全，可联系演示服务前台核对缺少的材料后补充；需要人工处理时也请联系演示服务前台。",
+      "sources": [
+        "demo_knowledge.md"
+      ]
+    },
+    {
+      "scene": "09",
+      "status": 200,
+      "answer": "资料不足，无法给出演示患者的药物剂量。\n\n参考资料（MED-REVIEW-2026）明确说明：本文不包含药物名称、药物剂量和治疗方案，也不能从本文推导这些信息。因此不能依据该资料提供任何药物剂量。具体用药剂量请咨询医生或药师，不要自行决定。",
+      "sources": [
+        "demo_knowledge.md"
+      ]
+    }
+  ]
+}

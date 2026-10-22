@@ -10,7 +10,7 @@
 - [演示说明](docs/演示视频与复现.md)：章节、录制方法、测试账号和合成资料说明。
 - [GitHub 提交说明](docs/GitHub提交说明.md)：发布、评审访问和真实 Git 历史说明。
 
-代码托管使用 GitHub，目标仓库名称为 `gaoqiuyu9579/RAG-medical-system`，中文项目名为“RAG医疗系统”。实际公开访问及发布结果以交付清单为准。公网在线演示按团队决定不纳入本次提交。
+代码托管使用 GitHub：[gaoqiuyu9579/RAG-medical-system](https://github.com/gaoqiuyu9579/RAG-medical-system)，仓库设为 Public，中文项目名为“RAG医疗系统”。公网在线演示按团队决定不纳入本次提交。
 
 ## 团队信息
 
@@ -179,4 +179,5 @@ docker compose exec app python -m deploy.reset_password admin
 
 - [部署与启动](docs/部署与启动.md)：环境变量、手机访问、日志、备份与回归命令。
 - [技术文档](docs/智慧医疗平台技术文档.md)：架构、接口、数据约束、鉴权与 RAG 实现。
+- [评审技术文档源稿](docs/评审技术文档.md)：PDF 对应的 3.0 版完整源文档。
 - [系统检查与修复报告](docs/系统检查与修复报告.md)：2026-10-16 的检查记录与已知限制，属于历史记录，不代表当前服务状态。

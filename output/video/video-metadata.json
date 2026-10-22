@@ -1,0 +1,112 @@
+{
+  "duration_seconds": 449.34,
+  "timeline_duration_seconds": 449.21,
+  "width": 1920,
+  "height": 1080,
+  "fps": 25,
+  "video_codec": "H.264",
+  "audio_codec": "AAC",
+  "language": "zh-CN",
+  "narration": "Microsoft Huihui Desktop / Mandarin synthetic speech",
+  "subtitles": "burned-in and external UTF-8 SRT",
+  "size_bytes": 10425407,
+  "editing": "Browser actions followed by held final frames for narration; no mocked API responses",
+  "chapters": [
+    {
+      "id": "01",
+      "title": "项目介绍与应用场景",
+      "start": 0.0,
+      "duration": 32.08,
+      "speech_seconds": 30.88,
+      "footage": "explanation-slide"
+    },
+    {
+      "id": "02",
+      "title": "技术架构与数据流",
+      "start": 32.08,
+      "duration": 38.19,
+      "speech_seconds": 36.99,
+      "footage": "explanation-slide"
+    },
+    {
+      "id": "03",
+      "title": "账号登录与首页统计",
+      "start": 70.27,
+      "duration": 38.06,
+      "speech_seconds": 36.86,
+      "footage": "real-browser-capture"
+    },
+    {
+      "id": "04",
+      "title": "患者登记与输入校验",
+      "start": 108.33,
+      "duration": 35.32,
+      "speech_seconds": 34.12,
+      "footage": "real-browser-capture"
+    },
+    {
+      "id": "05",
+      "title": "电子病历与患者关联",
+      "start": 143.65,
+      "duration": 37.06,
+      "speech_seconds": 35.86,
+      "footage": "real-browser-capture"
+    },
+    {
+      "id": "06",
+      "title": "关联删除保护",
+      "start": 180.71,
+      "duration": 32.2,
+      "speech_seconds": 31.0,
+      "footage": "real-browser-capture"
+    },
+    {
+      "id": "07",
+      "title": "知识库导入与真实向量化",
+      "start": 212.91,
+      "duration": 38.07,
+      "speech_seconds": 36.87,
+      "footage": "real-browser-capture"
+    },
+    {
+      "id": "08",
+      "title": "RAG 问答与来源展示",
+      "start": 250.98,
+      "duration": 38.0,
+      "speech_seconds": 36.68,
+      "footage": "real-browser-capture"
+    },
+    {
+      "id": "09",
+      "title": "资料不足时的回答边界",
+      "start": 288.98,
+      "duration": 37.63,
+      "speech_seconds": 36.43,
+      "footage": "real-browser-capture"
+    },
+    {
+      "id": "10",
+      "title": "AI 选型与优化策略",
+      "start": 326.61,
+      "duration": 41.7,
+      "speech_seconds": 40.5,
+      "footage": "explanation-slide"
+    },
+    {
+      "id": "11",
+      "title": "测试验证与部署交付",
+      "start": 368.31,
+      "duration": 38.84,
+      "speech_seconds": 37.64,
+      "footage": "explanation-slide"
+    },
+    {
+      "id": "12",
+      "title": "创新点、团队分工与展望",
+      "start": 407.15,
+      "duration": 42.06,
+      "speech_seconds": 40.86,
+      "footage": "explanation-slide"
+    }
+  ]
+}

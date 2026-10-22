@@ -261,8 +261,14 @@ def main():
         for i, (start, end, text) in enumerate(srt, 1)
     )
     (VIDEO / "智慧医疗系统演示.srt").write_text(srt_text + "\n", encoding="utf-8-sig")
+    probe = imageio_ffmpeg.read_frames(str(destination))
+    try:
+        container_seconds = next(probe)["duration"]
+    finally:
+        probe.close()
     metadata = {
-        "duration_seconds": round(offset, 2),
+        "duration_seconds": round(container_seconds, 2),
+        "timeline_duration_seconds": round(offset, 2),
         "width": 1920,
         "height": 1080,
         "fps": 25,

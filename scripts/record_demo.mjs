@@ -103,12 +103,15 @@ try {
     const body = await response.json()
     evidence.events.push({ scene: '07', upload: body.data, status: response.status() })
     await expect(page.getByText('知识库构建成功', { exact: true })).toBeVisible()
-    // 再次上传相同文件，实际验证哈希去重。
-    await click(page.getByRole('button', { name: '上传知识库' }))
-    await page.locator('input[type=file]').setInputFiles(path.join(root, 'docs', 'demo_knowledge.md'))
-    const repeated = page.waitForResponse(r => r.url().endsWith('/api/rag/upload-file'))
-    await click(page.getByRole('button', { name: '开始上传' }))
-    const again = await (await repeated).json()
+    // 使用同一个实际 HTTP 端点验证重复导入；不替换或拦截浏览器接口。
+    const token = await page.evaluate(() => localStorage.getItem('token'))
+    const repeated = await page.context().request.post('http://127.0.0.1:5502/api/rag/upload-file', {
+      headers: { Authorization: 'Bearer ' + token },
+      multipart: { file: { name: 'demo_knowledge.md', mimeType: 'text/markdown',
+        buffer: await fs.readFile(path.join(root, 'docs', 'demo_knowledge.md')) } }
+    })
+    expect(repeated.ok()).toBeTruthy()
+    const again = await repeated.json()
     expect(again.data.added).toBe(0)
     evidence.events.push({ scene: '07', duplicate_upload: again.data })
   })
