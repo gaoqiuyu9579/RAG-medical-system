@@ -5,9 +5,12 @@
         <h2 class="page-title">电子病历管理</h2>
         <p class="page-desc">记录和管理患者病历信息，支持病历录入</p>
       </div>
-      <el-button type="primary" size="large" @click="openAdd" class="add-btn">
-        <span class="btn-icon">＋</span> 新增病历
-      </el-button>
+      <div class="header-actions">
+        <el-button type="primary" plain size="large" :icon="Search" @click="$router.push('/patient')">查询患者</el-button>
+        <el-button type="primary" size="large" @click="openAdd" class="add-btn">
+          <span class="btn-icon">＋</span> 新增病历
+        </el-button>
+      </div>
     </div>
 
     <el-alert
@@ -27,7 +30,12 @@
         </div>
       </template>
 
-      <el-table
+      <el-alert v-if="loadError" :title="loadError" type="error" :closable="false"><el-button link @click="load">重新加载</el-button></el-alert>
+      <el-skeleton v-if="loading && !records.length" :rows="6" animated />
+      <el-table v-else
+        v-loading="loading"
+        row-key="id"
+        :row-class-name="({ row }) => row.id === highlightedId ? 'recently-saved' : ''"
         :data="records"
         style="width: 100%"
         stripe
@@ -56,13 +64,16 @@
             <span class="time-text">{{ formatTime(row.record_time) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="80" align="center">
+        <el-table-column label="操作" width="124" align="center" fixed="right">
           <template #default="scope">
+            <el-button type="primary" size="small" circle :icon="Edit" :aria-label="`编辑${getPatientName(scope.row.patient_id)}的病历`" @click="openEdit(scope.row)" />
             <el-button
               type="danger"
               size="small"
               circle
-              @click="remove(scope.row.id)"
+              @click="remove(scope.row)"
+              :aria-label="`删除${getPatientName(scope.row.patient_id)}的病历`"
+              :loading="deleting === scope.row.id"
               class="del-btn"
             >
               <el-icon><Delete /></el-icon>
@@ -75,13 +86,17 @@
     <!-- 新增弹窗 -->
     <el-dialog
       v-model="dialog"
-      title="录入病历"
+      :title="editingId ? '编辑病历' : '录入病历'"
       width="620px"
       :close-on-click-modal="false"
+      :close-on-press-escape="!saving"
+      :show-close="!saving"
+      :before-close="done => { if (!saving) done() }"
       class="custom-dialog"
     >
-      <el-form :model="form" label-width="90px" class="form">
-        <el-form-item label="选择患者" required>
+      <el-alert v-if="saveError" :title="saveError" description="输入已保留，请重试保存。" type="error" show-icon :closable="false" class="save-error" />
+      <el-form ref="formRef" :model="form" :rules="rules" :disabled="saving" label-width="90px" class="form" :class="{ 'validation-shake': shaking }">
+        <el-form-item label="选择患者" prop="patient_id" required>
           <el-select v-model="form.patient_id" placeholder="请选择患者" style="width:100%" filterable>
             <el-option
               v-for="p in patients"
@@ -109,24 +124,35 @@
       </el-form>
 
       <template #footer>
-        <el-button @click="dialog = false">取消</el-button>
-        <el-button type="primary" @click="save" :loading="saving">保存</el-button>
+        <el-button @click="dialog = false" :disabled="saving">取消</el-button>
+        <el-button :type="saved ? 'success' : 'primary'" @click="save" :loading="saving && !saved" :disabled="saved" :icon="saved ? Check : undefined">{{ saved ? '已保存' : saving ? '保存中' : saveError ? '重试保存' : '保存' }}</el-button>
       </template>
     </el-dialog>
+    <UndoNotice ref="undoRef" :restore="restoreRecord" @restored="putRow" />
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, computed, nextTick } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Delete } from '@element-plus/icons-vue'
-import { getRecords, addRecord, deleteRecord } from '../api/medical'
+import { Delete, Edit, Check, Search } from '@element-plus/icons-vue'
+import { getRecords, addRecord, deleteRecord, updateRecord, restoreRecord } from '../api/medical'
+import UndoNotice from '../components/UndoNotice.vue'
+import { useFeedback } from '../composables/useFeedback'
 import { getPatients } from '../api/patient'
 
 const records = ref([])
 const patients = ref([])
 const dialog = ref(false)
-const saving = ref(false)
+const { saving, saved, shaking, highlightedId, highlight, validate } = useFeedback()
+const formRef = ref(null)
+const undoRef = ref(null)
+const editingId = ref(null)
+const loading = ref(true)
+const loadError = ref('')
+const saveError = ref('')
+const deleting = ref(null)
+const rules = { patient_id: [{ required: true, message: '请选择关联患者', trigger: 'change' }] }
 const dataLoaded = ref(false)
 const unlinkedCount = computed(() => dataLoaded.value
   ? records.value.filter(record => !patients.value.some(patient => patient.id === record.patient_id)).length
@@ -146,35 +172,56 @@ function getPatientName(patientId) {
   return p ? p.name : (`待核对（ID:${patientId}）`)
 }
 
-function load() {
-  Promise.all([getRecords(), getPatients()])
-    .then(([recordResponse, patientResponse]) => {
+async function load() {
+  loading.value = true
+  try {
+      const [recordResponse, patientResponse] = await Promise.all([getRecords(), getPatients()])
       records.value = recordResponse.data
       patients.value = patientResponse.data
       dataLoaded.value = true
-    })
-    .catch(() => {})
+      loadError.value = ''
+  } catch (error) { loadError.value = error.message }
+  finally { loading.value = false }
 }
 
 onMounted(load)
 
 function openAdd() {
+  editingId.value = null
+  saved.value = false
+  saveError.value = ''
   Object.assign(form, { patient_id: null, doctor_name: '', diagnosis: '', symptom: '', treatment: '', medicine: '' })
   dialog.value = true
+  nextTick(() => formRef.value?.clearValidate())
 }
 
-function save() {
+function openEdit(row) {
+  openAdd()
+  editingId.value = row.id
+  for (const key of Object.keys(form)) form[key] = row[key] ?? ''
+}
+
+function putRow(row) {
+  const index = records.value.findIndex(item => item.id === row.id)
+  if (index < 0) records.value.unshift(row)
+  else records.value.splice(index, 1, row)
+  highlight(row.id)
+}
+
+async function save() {
   if (saving.value) return
-  if (!form.patient_id) { ElMessage.warning('请选择患者'); return }
+  saveError.value = ''
   saving.value = true
-  addRecord(form)
-    .then(() => {
-      ElMessage.success('保存成功')
-      dialog.value = false
-      load()
-    })
-    .catch(() => {})
-    .finally(() => { saving.value = false })
+  if (!await validate(formRef.value)) { saving.value = false; return }
+  try {
+    const response = await (editingId.value ? updateRecord(editingId.value, form) : addRecord(form))
+    saved.value = true
+    await new Promise(resolve => setTimeout(resolve, 700))
+    dialog.value = false
+    putRow(response.data)
+    ElMessage.success('保存成功')
+  } catch (error) { saveError.value = error.message }
+  finally { saving.value = false; saved.value = false }
 }
 
 function formatTime(time) {
@@ -185,19 +232,24 @@ function formatTime(time) {
   })
 }
 
-async function remove(id) {
+async function remove(row) {
+  if (deleting.value !== null) return
+  deleting.value = row.id
   try {
-    await ElMessageBox.confirm('确定要删除该病历吗？', '提示', { type: 'warning' })
-    await deleteRecord(id)
-    ElMessage.success('删除成功')
-    load()
+    await ElMessageBox.confirm(`即将删除患者「${getPatientName(row.patient_id)}」的病历（ID:${row.id}，诊断：${row.diagnosis || '未填写'}）。此操作会移除该诊疗记录，删除后 30 秒内可撤销。`, '确认删除病历', { type: 'error', customClass: 'danger-confirm', confirmButtonText: '确定', cancelButtonText: '取消', confirmButtonClass: 'el-button--danger' })
+    const response = await deleteRecord(row.id)
+    records.value = records.value.filter(item => item.id !== row.id)
+    undoRef.value.show(`「${getPatientName(row.patient_id)}」的病历`, response.data)
   } catch {
     // 取消删除不提示错误；请求失败由拦截器提示。
   }
+  finally { deleting.value = null }
 }
 </script>
 
 <style scoped>
+.header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.header-actions :deep(.el-button + .el-button) { margin-left: 0; }
 .medical-page {
   display: flex;
   flex-direction: column;

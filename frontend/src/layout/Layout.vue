@@ -16,6 +16,7 @@
         active-text-color="#63b3ed"
         class="menu"
       >
+        <div class="menu-indicator" :style="{ transform: `translateY(${Math.max(0, menuPaths.indexOf(activeMenu)) * 56}px)` }" />
         <el-menu-item index="/home">
           <span class="menu-icon">📊</span>
           <span>首页概览</span>
@@ -35,7 +36,14 @@
           <span class="menu-icon">🤖</span>
           <span>AI智能问诊</span>
         </el-menu-item>
+        <el-menu-item index="/statistics"><span class="menu-icon">📈</span><span>数据统计分析</span></el-menu-item>
       </el-menu>
+
+      <div class="knowledge-status" aria-live="polite">
+        <div class="knowledge-heading">📚 知识库状态 <span :class="{ ready: knowledge.ready && !knowledge.uploading && !knowledge.error && !knowledgeUpload.error, busy: knowledge.uploading, failed: knowledge.error || knowledgeUpload.error }">●</span></div>
+        <el-skeleton v-if="knowledge.loading && !knowledge.uploading" :rows="1" animated />
+        <template v-else><strong>{{ knowledge.documents }} <small>份文档 · {{ knowledge.chunks }} 个片段</small></strong><p>{{ knowledge.uploading ? knowledge.stage : knowledge.error ? '状态获取失败' : knowledge.ready ? '已就绪 · 可检索' : '待上传医学资料' }}</p><p v-if="knowledgeUpload.error" class="import-error">上次导入失败，请在问诊页重试</p><el-progress v-if="knowledge.uploading" :percentage="uploadProgress" :show-text="false" :stroke-width="4" indeterminate /><el-button v-if="knowledge.error" link @click="refreshKnowledge">重新加载</el-button></template>
+      </div>
 
       <div class="user-info">
         <div class="user-avatar">
@@ -67,7 +75,8 @@
       </el-header>
 
       <el-main class="main">
-        <router-view />
+        <div v-if="navigationPending" class="route-loading" role="status"><el-icon class="is-loading"><Loading /></el-icon> 页面加载中…</div>
+        <router-view v-slot="{ Component, route: currentRoute }"><Transition name="page" mode="out-in"><component :is="Component" :key="currentRoute.path" /></Transition></router-view>
       </el-main>
     </el-container>
     <PasswordDialog v-model="showPassword" />
@@ -80,18 +89,24 @@ import { useRouter, useRoute } from 'vue-router'
 import PasswordDialog from '../components/PasswordDialog.vue'
 import { getCurrentUser, getHealth } from '../api/user'
 import { clearSession, getStoredUser } from '../utils/auth'
+import { knowledge, knowledgeUpload, refreshKnowledge } from '../stores/knowledge'
+import { navigationPending } from '../router'
+import { Loading } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const route = useRoute()
 
 const activeMenu = computed(() => route.path)
+const menuPaths = ['/home', '/patient', '/medical', '/ai', '/statistics']
 
 const currentUser = ref(getStoredUser())
 const sidebarOpen = ref(false)
 const showPassword = ref(false)
 const serviceReady = ref(false)
+const uploadProgress = computed(() => ({ uploading: 12, parsing: 38, vectorizing: 72, complete: 100 })[knowledgeUpload.stage] || 0)
 watch(() => route.path, () => { sidebarOpen.value = false })
 onMounted(() => {
+  refreshKnowledge()
   getCurrentUser().then(res => {
     currentUser.value = res.data
     localStorage.setItem('user', JSON.stringify(res.data))
@@ -153,12 +168,17 @@ function handleLogout() {
   padding: 8px 0;
   border: none;
   background: transparent;
+  position: relative;
 }
+.menu-indicator { position: absolute; top: 12px; left: 12px; right: 12px; height: 52px; border-radius: 12px; background: linear-gradient(135deg, #63b3ed33, #4299e51c); border-left: 3px solid #63b3ed; transition: transform .25s ease; pointer-events: none; }
+.knowledge-status { margin: 16px; padding: 16px; background: #ffffff09; border: 1px solid #ffffff12; border-radius: 12px; color: #c2d5ea; }.knowledge-heading { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 12px; }.knowledge-heading span { color: #a0aec0; }.knowledge-heading .ready { color: #68d391; }.knowledge-heading .busy { color: #f6c36b; animation: pulse 1s infinite; }.knowledge-status strong { font-size: 23px; color: #f0f6ff; }.knowledge-status small { font-size: 11px; font-weight: normal; color: #a4b6ce; }.knowledge-status p { margin: 8px 0 0; color: #a4b6ce; font-size: 12px; }@keyframes pulse { 50% { opacity: .3; } }
 
 .menu-item {
   border-radius: 10px;
   margin: 4px 12px;
 }
+.knowledge-heading .failed, .knowledge-status .import-error { color: #fcaaaa; }
+.knowledge-status :deep(.el-progress) { margin-top: 12px; }
 
 .menu-icon {
   margin-right: 10px;
@@ -188,9 +208,9 @@ function handleLogout() {
 }
 
 :deep(.el-menu-item.is-active) {
-  background: linear-gradient(135deg, rgba(99, 179, 237, 0.25), rgba(66, 153, 225, 0.15)) !important;
+  background: transparent !important;
   color: #63b3ed !important;
-  box-shadow: 0 0 15px rgba(99, 179, 237, 0.2) !important;
+  box-shadow: none !important;
 }
 
 .user-info {
@@ -275,6 +295,7 @@ function handleLogout() {
   padding: 28px;
   overflow-y: auto;
 }
+.route-loading { position: absolute; top: 64px; right: 30px; z-index: 20; display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: #fff; border-radius: 10px; box-shadow: 0 4px 18px #163d5620; color: #3182ce; font-size: 13px; }
 
 .content-container, .main { min-width: 0; }
 .header-left, .header-right { display: flex; align-items: center; gap: 12px; }

@@ -1,0 +1,39 @@
+{
+  "patientCount": 12,
+  "recordCount": 56,
+  "periodRecords": 56,
+  "ageDistribution": [
+    {
+      "name": "0–17 岁",
+      "value": 1
+    },
+    {
+      "name": "18–44 岁",
+      "value": 3
+    },
+    {
+      "name": "45–59 岁",
+      "value": 3
+    },
+    {
+      "name": "60–74 岁",
+      "value": 4
+    },
+    {
+      "name": "75 岁及以上",
+      "value": 1
+    },
+    {
+      "name": "未填写/待核对",
+      "value": 0
+    }
+  ],
+  "browserErrors": [],
+  "screenshotPaths": [
+    "statistics-desktop.png",
+    "patients-desktop.png",
+    "validation-desktop.png",
+    "statistics-mobile.png",
+    "statistics-mobile-trend.png"
+  ]
+}

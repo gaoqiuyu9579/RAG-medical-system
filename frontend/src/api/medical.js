@@ -1,5 +1,8 @@
 import request from "./request"
 
+export const updateRecord = (id, data) => request.put(`/medical/update/${id}`, data)
+export const restoreRecord = token => request.post('/medical/restore', { token })
+
 
 
 export function getRecords(){

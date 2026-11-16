@@ -37,6 +37,12 @@ def main():
 
     app = create_app()
     bootstrap_admin(app)
+    if os.getenv("BOOTSTRAP_DEMO_DATA", "0") == "1":
+        from deploy.demo_data import seed_demo_data
+
+        with app.app_context():
+            if seed_demo_data():
+                print("已初始化合成演示资料：12 位患者、56 份随访病历", flush=True)
     serve(app, host="0.0.0.0", port=5000, threads=4)
 
 

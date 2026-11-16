@@ -1,5 +1,5 @@
 {
-  "recorded_at_utc": "2026-10-22T05:36:27.220Z",
+  "recorded_at_utc": "2026-11-11T13:23:51.064Z",
   "ai_mode": "real-configured-clients",
   "business_database": "isolated SQLite; deployment uses MySQL",
   "events": [
@@ -20,11 +20,39 @@
       "related_patient_delete_status": 409
     },
     {
+      "scene": "06",
+      "undo_delete": "original archive restored"
+    },
+    {
       "scene": "07",
       "upload": {
         "added": 1,
         "total": 1
       },
+      "stages": [
+        {
+          "type": "progress",
+          "stage": "parsing",
+          "message": "文档解析中 · 正在提取文本"
+        },
+        {
+          "type": "progress",
+          "stage": "parsing",
+          "message": "文档解析中 · 正在分块"
+        },
+        {
+          "type": "progress",
+          "stage": "vectorizing",
+          "message": "向量化中 · 正在生成并保存知识向量"
+        },
+        {
+          "type": "done",
+          "result": {
+            "added": 1,
+            "total": 1
+          }
+        }
+      ],
       "status": 200
     },
     {
@@ -37,18 +65,823 @@
     {
       "scene": "08",
       "status": 200,
-      "answer": "根据参考资料：\n\n- **开放时间**：周一至周五，上午九点至下午五点。\n- **登记材料**：预约编号、随访登记表。\n\n如果材料不齐全，可联系演示服务前台核对缺少的材料后补充；需要人工处理时也请联系演示服务前台。",
+      "events": [
+        {
+          "type": "status",
+          "message": "正在检索医学知识库"
+        },
+        {
+          "type": "sources",
+          "sources": [
+            "demo_knowledge.md"
+          ],
+          "citations": [
+            {
+              "source": "demo_knowledge.md",
+              "excerpt": "# 评审演示资料：随访登记窗口\n\n资料编号：MED-REVIEW-2026。本文为系统评审专用的合成业务资料，不是临床指南。\n\n演示随访登记窗口的开放时间：周一至周五，上午九点至下午五点。\n演示登记材料清单：预约编号、随访登记表。\n登记材料不齐全时，联系演示服务前台，核对缺少的材料后补充。\n需要人工处理时，请联系演示服务前台。\n\n本文不包含疾病诊断标准、药物名称、药物剂量和治疗方案；不能从本文推导这些信息。\n当问题涉及本文未载明的信息时，应明确说明资料不足，不能编造。",
+              "chunk": 1
+            }
+          ]
+        },
+        {
+          "type": "status",
+          "message": "正在结合参考资料组织回答"
+        },
+        {
+          "type": "delta",
+          "content": "根据"
+        },
+        {
+          "type": "delta",
+          "content": "参考资料"
+        },
+        {
+          "type": "delta",
+          "content": "（"
+        },
+        {
+          "type": "delta",
+          "content": "MED"
+        },
+        {
+          "type": "delta",
+          "content": "-"
+        },
+        {
+          "type": "delta",
+          "content": "RE"
+        },
+        {
+          "type": "delta",
+          "content": "VIEW"
+        },
+        {
+          "type": "delta",
+          "content": "-"
+        },
+        {
+          "type": "delta",
+          "content": "202"
+        },
+        {
+          "type": "delta",
+          "content": "6"
+        },
+        {
+          "type": "delta",
+          "content": "，"
+        },
+        {
+          "type": "delta",
+          "content": "系统"
+        },
+        {
+          "type": "delta",
+          "content": "评审"
+        },
+        {
+          "type": "delta",
+          "content": "专用"
+        },
+        {
+          "type": "delta",
+          "content": "合成"
+        },
+        {
+          "type": "delta",
+          "content": "业务"
+        },
+        {
+          "type": "delta",
+          "content": "资料"
+        },
+        {
+          "type": "delta",
+          "content": "）：\n\n"
+        },
+        {
+          "type": "delta",
+          "content": "-"
+        },
+        {
+          "type": "delta",
+          "content": " **"
+        },
+        {
+          "type": "delta",
+          "content": "开放"
+        },
+        {
+          "type": "delta",
+          "content": "时间"
+        },
+        {
+          "type": "delta",
+          "content": "**"
+        },
+        {
+          "type": "delta",
+          "content": "："
+        },
+        {
+          "type": "delta",
+          "content": "周一"
+        },
+        {
+          "type": "delta",
+          "content": "至"
+        },
+        {
+          "type": "delta",
+          "content": "周五"
+        },
+        {
+          "type": "delta",
+          "content": "，"
+        },
+        {
+          "type": "delta",
+          "content": "上午"
+        },
+        {
+          "type": "delta",
+          "content": "九"
+        },
+        {
+          "type": "delta",
+          "content": "点"
+        },
+        {
+          "type": "delta",
+          "content": "至"
+        },
+        {
+          "type": "delta",
+          "content": "下午"
+        },
+        {
+          "type": "delta",
+          "content": "五点"
+        },
+        {
+          "type": "delta",
+          "content": "。\n"
+        },
+        {
+          "type": "delta",
+          "content": "-"
+        },
+        {
+          "type": "delta",
+          "content": " **"
+        },
+        {
+          "type": "delta",
+          "content": "登记"
+        },
+        {
+          "type": "delta",
+          "content": "材料"
+        },
+        {
+          "type": "delta",
+          "content": "**"
+        },
+        {
+          "type": "delta",
+          "content": "："
+        },
+        {
+          "type": "delta",
+          "content": "预约"
+        },
+        {
+          "type": "delta",
+          "content": "编号"
+        },
+        {
+          "type": "delta",
+          "content": "、"
+        },
+        {
+          "type": "delta",
+          "content": "随访"
+        },
+        {
+          "type": "delta",
+          "content": "登记"
+        },
+        {
+          "type": "delta",
+          "content": "表"
+        },
+        {
+          "type": "delta",
+          "content": "。\n\n"
+        },
+        {
+          "type": "delta",
+          "content": "如果"
+        },
+        {
+          "type": "delta",
+          "content": "材料"
+        },
+        {
+          "type": "delta",
+          "content": "不"
+        },
+        {
+          "type": "delta",
+          "content": "齐全"
+        },
+        {
+          "type": "delta",
+          "content": "，"
+        },
+        {
+          "type": "delta",
+          "content": "可"
+        },
+        {
+          "type": "delta",
+          "content": "联系"
+        },
+        {
+          "type": "delta",
+          "content": "演示"
+        },
+        {
+          "type": "delta",
+          "content": "服务"
+        },
+        {
+          "type": "delta",
+          "content": "前台"
+        },
+        {
+          "type": "delta",
+          "content": "，"
+        },
+        {
+          "type": "delta",
+          "content": "核对"
+        },
+        {
+          "type": "delta",
+          "content": "缺少"
+        },
+        {
+          "type": "delta",
+          "content": "的材料"
+        },
+        {
+          "type": "delta",
+          "content": "后"
+        },
+        {
+          "type": "delta",
+          "content": "补充"
+        },
+        {
+          "type": "delta",
+          "content": "；"
+        },
+        {
+          "type": "delta",
+          "content": "需要"
+        },
+        {
+          "type": "delta",
+          "content": "人工"
+        },
+        {
+          "type": "delta",
+          "content": "处理"
+        },
+        {
+          "type": "delta",
+          "content": "时"
+        },
+        {
+          "type": "delta",
+          "content": "也"
+        },
+        {
+          "type": "delta",
+          "content": "请联系"
+        },
+        {
+          "type": "delta",
+          "content": "演示"
+        },
+        {
+          "type": "delta",
+          "content": "服务"
+        },
+        {
+          "type": "delta",
+          "content": "前台"
+        },
+        {
+          "type": "delta",
+          "content": "。\n\n"
+        },
+        {
+          "type": "delta",
+          "content": "以上"
+        },
+        {
+          "type": "delta",
+          "content": "仅为"
+        },
+        {
+          "type": "delta",
+          "content": "该"
+        },
+        {
+          "type": "delta",
+          "content": "演示"
+        },
+        {
+          "type": "delta",
+          "content": "资料的"
+        },
+        {
+          "type": "delta",
+          "content": "登记"
+        },
+        {
+          "type": "delta",
+          "content": "窗口"
+        },
+        {
+          "type": "delta",
+          "content": "信息"
+        },
+        {
+          "type": "delta",
+          "content": "，"
+        },
+        {
+          "type": "delta",
+          "content": "不"
+        },
+        {
+          "type": "delta",
+          "content": "涉及"
+        },
+        {
+          "type": "delta",
+          "content": "任何"
+        },
+        {
+          "type": "delta",
+          "content": "诊疗"
+        },
+        {
+          "type": "delta",
+          "content": "内容"
+        },
+        {
+          "type": "delta",
+          "content": "。"
+        },
+        {
+          "type": "done",
+          "sources": [
+            "demo_knowledge.md"
+          ],
+          "citations": [
+            {
+              "source": "demo_knowledge.md",
+              "excerpt": "# 评审演示资料：随访登记窗口\n\n资料编号：MED-REVIEW-2026。本文为系统评审专用的合成业务资料，不是临床指南。\n\n演示随访登记窗口的开放时间：周一至周五，上午九点至下午五点。\n演示登记材料清单：预约编号、随访登记表。\n登记材料不齐全时，联系演示服务前台，核对缺少的材料后补充。\n需要人工处理时，请联系演示服务前台。\n\n本文不包含疾病诊断标准、药物名称、药物剂量和治疗方案；不能从本文推导这些信息。\n当问题涉及本文未载明的信息时，应明确说明资料不足，不能编造。",
+              "chunk": 1
+            }
+          ]
+        }
+      ],
+      "answer": "根据参考资料（MED-REVIEW-2026，系统评审专用合成业务资料）：\n\n- **开放时间**：周一至周五，上午九点至下午五点。\n- **登记材料**：预约编号、随访登记表。\n\n如果材料不齐全，可联系演示服务前台，核对缺少的材料后补充；需要人工处理时也请联系演示服务前台。\n\n以上仅为该演示资料的登记窗口信息，不涉及任何诊疗内容。",
+      "type": "done",
       "sources": [
         "demo_knowledge.md"
+      ],
+      "citations": [
+        {
+          "source": "demo_knowledge.md",
+          "excerpt": "# 评审演示资料：随访登记窗口\n\n资料编号：MED-REVIEW-2026。本文为系统评审专用的合成业务资料，不是临床指南。\n\n演示随访登记窗口的开放时间：周一至周五，上午九点至下午五点。\n演示登记材料清单：预约编号、随访登记表。\n登记材料不齐全时，联系演示服务前台，核对缺少的材料后补充。\n需要人工处理时，请联系演示服务前台。\n\n本文不包含疾病诊断标准、药物名称、药物剂量和治疗方案；不能从本文推导这些信息。\n当问题涉及本文未载明的信息时，应明确说明资料不足，不能编造。",
+          "chunk": 1
+        }
       ]
     },
     {
       "scene": "09",
       "status": 200,
-      "answer": "资料不足，无法给出演示患者的药物剂量。\n\n参考资料（MED-REVIEW-2026）明确说明：本文不包含药物名称、药物剂量和治疗方案，也不能从本文推导这些信息。因此不能依据该资料提供任何药物剂量。具体用药剂量请咨询医生或药师，不要自行决定。",
+      "events": [
+        {
+          "type": "status",
+          "message": "正在检索医学知识库"
+        },
+        {
+          "type": "sources",
+          "sources": [
+            "demo_knowledge.md"
+          ],
+          "citations": [
+            {
+              "source": "demo_knowledge.md",
+              "excerpt": "# 评审演示资料：随访登记窗口\n\n资料编号：MED-REVIEW-2026。本文为系统评审专用的合成业务资料，不是临床指南。\n\n演示随访登记窗口的开放时间：周一至周五，上午九点至下午五点。\n演示登记材料清单：预约编号、随访登记表。\n登记材料不齐全时，联系演示服务前台，核对缺少的材料后补充。\n需要人工处理时，请联系演示服务前台。\n\n本文不包含疾病诊断标准、药物名称、药物剂量和治疗方案；不能从本文推导这些信息。\n当问题涉及本文未载明的信息时，应明确说明资料不足，不能编造。",
+              "chunk": 1
+            }
+          ]
+        },
+        {
+          "type": "status",
+          "message": "正在结合参考资料组织回答"
+        },
+        {
+          "type": "delta",
+          "content": "资料"
+        },
+        {
+          "type": "delta",
+          "content": "中"
+        },
+        {
+          "type": "delta",
+          "content": "不"
+        },
+        {
+          "type": "delta",
+          "content": "包含"
+        },
+        {
+          "type": "delta",
+          "content": "任何"
+        },
+        {
+          "type": "delta",
+          "content": "药物"
+        },
+        {
+          "type": "delta",
+          "content": "名称"
+        },
+        {
+          "type": "delta",
+          "content": "或"
+        },
+        {
+          "type": "delta",
+          "content": "药物"
+        },
+        {
+          "type": "delta",
+          "content": "剂量"
+        },
+        {
+          "type": "delta",
+          "content": "信息"
+        },
+        {
+          "type": "delta",
+          "content": "，"
+        },
+        {
+          "type": "delta",
+          "content": "因此"
+        },
+        {
+          "type": "delta",
+          "content": "无法"
+        },
+        {
+          "type": "delta",
+          "content": "给出"
+        },
+        {
+          "type": "delta",
+          "content": "演示"
+        },
+        {
+          "type": "delta",
+          "content": "患者的"
+        },
+        {
+          "type": "delta",
+          "content": "药物"
+        },
+        {
+          "type": "delta",
+          "content": "剂量"
+        },
+        {
+          "type": "delta",
+          "content": "。"
+        },
+        {
+          "type": "delta",
+          "content": "该"
+        },
+        {
+          "type": "delta",
+          "content": "资料"
+        },
+        {
+          "type": "delta",
+          "content": "仅为"
+        },
+        {
+          "type": "delta",
+          "content": "随访"
+        },
+        {
+          "type": "delta",
+          "content": "登记"
+        },
+        {
+          "type": "delta",
+          "content": "窗口"
+        },
+        {
+          "type": "delta",
+          "content": "的"
+        },
+        {
+          "type": "delta",
+          "content": "演示"
+        },
+        {
+          "type": "delta",
+          "content": "业务"
+        },
+        {
+          "type": "delta",
+          "content": "资料"
+        },
+        {
+          "type": "delta",
+          "content": "，"
+        },
+        {
+          "type": "delta",
+          "content": "不"
+        },
+        {
+          "type": "delta",
+          "content": "涉及"
+        },
+        {
+          "type": "delta",
+          "content": "诊断"
+        },
+        {
+          "type": "delta",
+          "content": "标准"
+        },
+        {
+          "type": "delta",
+          "content": "、"
+        },
+        {
+          "type": "delta",
+          "content": "药物"
+        },
+        {
+          "type": "delta",
+          "content": "或"
+        },
+        {
+          "type": "delta",
+          "content": "治疗方案"
+        },
+        {
+          "type": "delta",
+          "content": "；"
+        },
+        {
+          "type": "delta",
+          "content": "如需"
+        },
+        {
+          "type": "delta",
+          "content": "用药"
+        },
+        {
+          "type": "delta",
+          "content": "相关信息"
+        },
+        {
+          "type": "delta",
+          "content": "，"
+        },
+        {
+          "type": "delta",
+          "content": "请"
+        },
+        {
+          "type": "delta",
+          "content": "咨询"
+        },
+        {
+          "type": "delta",
+          "content": "医生"
+        },
+        {
+          "type": "delta",
+          "content": "或"
+        },
+        {
+          "type": "delta",
+          "content": "药师"
+        },
+        {
+          "type": "delta",
+          "content": "。"
+        },
+        {
+          "type": "done",
+          "sources": [
+            "demo_knowledge.md"
+          ],
+          "citations": [
+            {
+              "source": "demo_knowledge.md",
+              "excerpt": "# 评审演示资料：随访登记窗口\n\n资料编号：MED-REVIEW-2026。本文为系统评审专用的合成业务资料，不是临床指南。\n\n演示随访登记窗口的开放时间：周一至周五，上午九点至下午五点。\n演示登记材料清单：预约编号、随访登记表。\n登记材料不齐全时，联系演示服务前台，核对缺少的材料后补充。\n需要人工处理时，请联系演示服务前台。\n\n本文不包含疾病诊断标准、药物名称、药物剂量和治疗方案；不能从本文推导这些信息。\n当问题涉及本文未载明的信息时，应明确说明资料不足，不能编造。",
+              "chunk": 1
+            }
+          ]
+        }
+      ],
+      "answer": "资料中不包含任何药物名称或药物剂量信息，因此无法给出演示患者的药物剂量。该资料仅为随访登记窗口的演示业务资料，不涉及诊断标准、药物或治疗方案；如需用药相关信息，请咨询医生或药师。",
+      "type": "done",
       "sources": [
         "demo_knowledge.md"
+      ],
+      "citations": [
+        {
+          "source": "demo_knowledge.md",
+          "excerpt": "# 评审演示资料：随访登记窗口\n\n资料编号：MED-REVIEW-2026。本文为系统评审专用的合成业务资料，不是临床指南。\n\n演示随访登记窗口的开放时间：周一至周五，上午九点至下午五点。\n演示登记材料清单：预约编号、随访登记表。\n登记材料不齐全时，联系演示服务前台，核对缺少的材料后补充。\n需要人工处理时，请联系演示服务前台。\n\n本文不包含疾病诊断标准、药物名称、药物剂量和治疗方案；不能从本文推导这些信息。\n当问题涉及本文未载明的信息时，应明确说明资料不足，不能编造。",
+          "chunk": 1
+        }
       ]
+    },
+    {
+      "scene": "10",
+      "analytics": {
+        "ageDistribution": [
+          {
+            "name": "0–17 岁",
+            "value": 1
+          },
+          {
+            "name": "18–44 岁",
+            "value": 3
+          },
+          {
+            "name": "45–59 岁",
+            "value": 4
+          },
+          {
+            "name": "60–74 岁",
+            "value": 5
+          },
+          {
+            "name": "75 岁及以上",
+            "value": 1
+          },
+          {
+            "name": "未填写/待核对",
+            "value": 0
+          }
+        ],
+        "averageAge": 53,
+        "patientCount": 14,
+        "periodRecords": 57,
+        "recordCount": 57,
+        "trend": [
+          {
+            "date": "2026-10-13",
+            "value": 3
+          },
+          {
+            "date": "2026-10-14",
+            "value": 1
+          },
+          {
+            "date": "2026-10-15",
+            "value": 1
+          },
+          {
+            "date": "2026-10-16",
+            "value": 2
+          },
+          {
+            "date": "2026-10-17",
+            "value": 4
+          },
+          {
+            "date": "2026-10-18",
+            "value": 0
+          },
+          {
+            "date": "2026-10-19",
+            "value": 2
+          },
+          {
+            "date": "2026-10-20",
+            "value": 3
+          },
+          {
+            "date": "2026-10-21",
+            "value": 1
+          },
+          {
+            "date": "2026-10-22",
+            "value": 1
+          },
+          {
+            "date": "2026-10-23",
+            "value": 2
+          },
+          {
+            "date": "2026-10-24",
+            "value": 4
+          },
+          {
+            "date": "2026-10-25",
+            "value": 0
+          },
+          {
+            "date": "2026-10-26",
+            "value": 2
+          },
+          {
+            "date": "2026-10-27",
+            "value": 3
+          },
+          {
+            "date": "2026-10-28",
+            "value": 1
+          },
+          {
+            "date": "2026-10-29",
+            "value": 1
+          },
+          {
+            "date": "2026-10-30",
+            "value": 2
+          },
+          {
+            "date": "2026-10-31",
+            "value": 4
+          },
+          {
+            "date": "2026-11-01",
+            "value": 0
+          },
+          {
+            "date": "2026-11-02",
+            "value": 2
+          },
+          {
+            "date": "2026-11-03",
+            "value": 3
+          },
+          {
+            "date": "2026-11-04",
+            "value": 1
+          },
+          {
+            "date": "2026-11-05",
+            "value": 1
+          },
+          {
+            "date": "2026-11-06",
+            "value": 2
+          },
+          {
+            "date": "2026-11-07",
+            "value": 4
+          },
+          {
+            "date": "2026-11-08",
+            "value": 0
+          },
+          {
+            "date": "2026-11-09",
+            "value": 2
+          },
+          {
+            "date": "2026-11-10",
+            "value": 3
+          },
+          {
+            "date": "2026-11-11",
+            "value": 2
+          }
+        ]
+      }
     }
   ]
 }

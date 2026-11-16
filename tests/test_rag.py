@@ -58,7 +58,7 @@ class RagTests(unittest.TestCase):
         second = vectors.create_vector_store("测试资料 MED-DEMO-01", "test.txt")
         self.assertEqual(first, {"added": 1, "total": 1})
         self.assertEqual(second, {"added": 0, "total": 1})
-        self.assertEqual(vectors.knowledge_status(), {"ready": True, "chunks": 1})
+        self.assertEqual(vectors.knowledge_status(), {"ready": True, "chunks": 1, "documents": 1})
         results = vectors.load_vector_store().similarity_search("MED-DEMO-01", k=3)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].metadata["source"], "test.txt")

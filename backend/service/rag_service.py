@@ -1,10 +1,13 @@
 """RAG 业务入口。"""
 
-from backend.rag.qa_chain import ask_medical_question
-from backend.rag.vector_store import create_vector_store, knowledge_status
+from backend.rag.qa_chain import ask_medical_question, stream_medical_question
+from backend.rag.vector_store import create_vector_store, knowledge_status, stream_vector_store
 
 
 class RagService:
+    stream_chat = staticmethod(stream_medical_question)
+    stream_upload = staticmethod(stream_vector_store)
+
     @staticmethod
     def upload_text(text, source="粘贴文本"):
         return create_vector_store(text, source)

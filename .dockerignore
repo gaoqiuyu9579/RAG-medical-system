@@ -7,6 +7,8 @@
 backend/**/__pycache__/
 backend/**/*.pyc
 backend/chroma_db/
+backend/.venv/
+backend/.idea/
 !deploy/
 !deploy/**
 deploy/**/__pycache__/

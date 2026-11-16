@@ -1,0 +1,614 @@
+[
+  {
+    "path": ".ruff_cache",
+    "files": 22,
+    "bytes": 7206.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\backend-review.log",
+    "files": 1,
+    "bytes": 6229.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\deployment-after.json",
+    "files": 1,
+    "bytes": 174.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\deployment-before.json",
+    "files": 1,
+    "bytes": 127.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\deployment-restart.json",
+    "files": 1,
+    "bytes": 174.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\docker-build.log",
+    "files": 1,
+    "bytes": 3790.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-17284e39273b46af98c28c809037fc6d",
+    "files": 6,
+    "bytes": 408804.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-51ac4c697e9a4c2695cdb1481dd47671",
+    "files": 6,
+    "bytes": 400612.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-54262fed1c744bd196904a8d7bf5a43f",
+    "files": 6,
+    "bytes": 408804.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-65af55643d7744429c6d091dc56c52c1",
+    "files": 6,
+    "bytes": 400612.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-9d7180f3253c4bdfa500422bd2abc8e0",
+    "files": 6,
+    "bytes": 408804.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-b1efcf34a9a947a697cee0094d0b1729",
+    "files": 6,
+    "bytes": 408804.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-c0b5b48e600f4f018f674b9faf2432e3",
+    "files": 6,
+    "bytes": 408804.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-cd181132333b493992685d6043ca384b",
+    "files": 6,
+    "bytes": 408804.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-d0c4bd27958a467c94b4a6c3c290cdaa",
+    "files": 1,
+    "bytes": 32768.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\e2e-review.log",
+    "files": 1,
+    "bytes": 48748.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\native-app-startup.log",
+    "files": 1,
+    "bytes": 672.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\native-startup-backup.json",
+    "files": 1,
+    "bytes": 470.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\python-security.json",
+    "files": 1,
+    "bytes": 14973.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-006faca1d9424c4da7f31561c7643994",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-0c8ca0f09b70440d94749835bc3cf322",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-0cddbb78462d42b48066ca0754b0c711",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-106c776b111340408f183e6d4c0808e5",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-191e26e8520e4da2b8c3f64fb946b2fc",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-1c90dc8a45124ee6baef018b6c1030da",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-299d0878a9d6480591258e05cde5c14b",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-2b74019145004a2b92aa89448048406b",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-2ef4943f941344c58948aa099537d2c4",
+    "files": 1,
+    "bytes": 64.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-41cbc15542c04af88280c65b5a1861f7",
+    "files": 1,
+    "bytes": 64.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-4a7f245d602941dfb67a796c70909c5a",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-4b151fa192b94183aee16f3f00ca2c15",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-4f79b6117cf2424ca45eb253d3b48f54",
+    "files": 1,
+    "bytes": 64.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-516110bfe60445ee853fac264f5a00db",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-53deb339462f4d33baaefb84ffb8864e",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-575f37cfa9c3443fa091feb68a1e42ce",
+    "files": 1,
+    "bytes": 64.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-68b85653ff9348dda14dd8e3fceb703a",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-6c5df5879ebe402abf8795ca32114d9c",
+    "files": 1,
+    "bytes": 64.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-6da37a640ec440d7990d9cb85916715f",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-7384d9f575a048f4852f8a99bc59da0c",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-7e86e89e4346439cb60adb4014b9b20a",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-850e1a4a681e4360829f8795956dbd65",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-88263a4e685a42cbbc7c6bee15b98098",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-8d521aea16a24bda8875576554c5c4ae",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-8f5970fb3922414c968add4124862055",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-9338c600e1794be995b1f7c30cf00940",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-9703a0dc04b547f386741b7d56e2f1b7",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-a37aa00beca54b46a67e2a234cec8d02",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-b57e8bf2331b494792bfe7738488306d",
+    "files": 1,
+    "bytes": 64.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-bd6cf9c48f4642c19c9b9e1ec0aa9735",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-cbb54d96fcae4b008f4c91ddd1a07f51",
+    "files": 1,
+    "bytes": 64.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-cd68968b264744eeb86f3f2835301e9e",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-d2dc122aea0b452b9c7f6b2359260e1a",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-d680870631ed42c99663393428f22cad",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-d86d7e2a9b0a4a35ac6fbf7ae39ae526",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-da50241326a14160913a42a164f210a9",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-e2714350154f4b8795974832a1322321",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-f1d8edb820a44dd4982e57f31b86b643",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-f83f14a5df734fbe97be71cacdc60e84",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-f8f7863e844a4a8db0fff0bc342e1beb",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-fb8f1b0e8c0a4484850dff162e6fd475",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-feaba9956a1042afbe8de32387900c2a",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\review-demo",
+    "files": 6,
+    "bytes": 4432612.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\review-demo-68fcc1545aaf4971b7ab59f7f45fd464",
+    "files": 6,
+    "bytes": 5669604.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\review-demo-a6906690c29342a2b3d70e6aa8b7e5db",
+    "files": 6,
+    "bytes": 4432612.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\review-demo-c522418afe35490682343a1c268a0078",
+    "files": 6,
+    "bytes": 5567204.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\review-demo-e5434ff000d645aaa4dad1b6c5d6ddc1",
+    "files": 6,
+    "bytes": 4432612.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\review-demo-fb22792e1ce3462a896e61b725a44c5c",
+    "files": 1,
+    "bytes": 45056.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\review-feedback-20261112",
+    "files": 10,
+    "bytes": 666899.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\__pycache__",
+    "files": 1,
+    "bytes": 11750.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\.idea",
+    "files": 8,
+    "bytes": 5852.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\.venv",
+    "files": 1244,
+    "bytes": 14660915.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\config\\__pycache__",
+    "files": 4,
+    "bytes": 7294.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\controller\\__pycache__",
+    "files": 5,
+    "bytes": 30015.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\model\\__pycache__",
+    "files": 4,
+    "bytes": 6196.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\rag\\__pycache__",
+    "files": 5,
+    "bytes": 16784.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\service\\__pycache__",
+    "files": 6,
+    "bytes": 19502.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\utils\\__pycache__",
+    "files": 5,
+    "bytes": 9786.0,
+    "recycled": true
+  },
+  {
+    "path": "deploy\\__pycache__",
+    "files": 7,
+    "bytes": 23603.0,
+    "recycled": true
+  },
+  {
+    "path": "frontend\\e2e-run.log",
+    "files": 1,
+    "bytes": 71869.0,
+    "recycled": true
+  },
+  {
+    "path": "frontend\\test-results",
+    "files": 6,
+    "bytes": 470488.0,
+    "recycled": true
+  },
+  {
+    "path": "output\\video\\audio",
+    "files": 13,
+    "bytes": 19205384.0,
+    "recycled": true
+  },
+  {
+    "path": "output\\video\\raw",
+    "files": 11,
+    "bytes": 45341658.0,
+    "recycled": true
+  },
+  {
+    "path": "output\\video\\segments",
+    "files": 13,
+    "bytes": 13664137.0,
+    "recycled": true
+  },
+  {
+    "path": "scripts\\__pycache__",
+    "files": 1,
+    "bytes": 3569.0,
+    "recycled": true
+  },
+  {
+    "path": "tests\\__pycache__",
+    "files": 4,
+    "bytes": 85217.0,
+    "recycled": true
+  },
+  {
+    "path": "tmp",
+    "files": 123,
+    "bytes": 15173122.0,
+    "recycled": true
+  },
+  {
+    "path": ".ruff_cache",
+    "files": 12,
+    "bytes": 3662.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-0d8a5e1fc11f432b9636c54ac1cd35bc",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-511d9c11d01a4bffbc16d7ded0275d6f",
+    "files": 1,
+    "bytes": 64.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-71152f3766854217984127ff783c3269",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-d8507eff786249f2bed72cc212c8a39b",
+    "files": 1,
+    "bytes": 167936.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-f9dc2e171e7c44f0be5dbb2af390c6c0",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": ".test-artifacts\\rag-fca24c5ac9ee4c338c46080c88eed837",
+    "files": 5,
+    "bytes": 376036.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\__pycache__",
+    "files": 1,
+    "bytes": 11750.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\config\\__pycache__",
+    "files": 4,
+    "bytes": 7294.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\controller\\__pycache__",
+    "files": 5,
+    "bytes": 30015.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\model\\__pycache__",
+    "files": 4,
+    "bytes": 6196.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\rag\\__pycache__",
+    "files": 5,
+    "bytes": 16784.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\service\\__pycache__",
+    "files": 6,
+    "bytes": 19502.0,
+    "recycled": true
+  },
+  {
+    "path": "backend\\utils\\__pycache__",
+    "files": 5,
+    "bytes": 9786.0,
+    "recycled": true
+  },
+  {
+    "path": "deploy\\__pycache__",
+    "files": 4,
+    "bytes": 15139.0,
+    "recycled": true
+  },
+  {
+    "path": "tests\\__pycache__",
+    "files": 4,
+    "bytes": 85217.0,
+    "recycled": true
+  }
+]

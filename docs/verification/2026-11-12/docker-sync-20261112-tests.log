@@ -1,0 +1,57 @@
+已初始化演示账号 test-admin
+test_bootstrap_login_and_restart_preserve_existing_password (test_deployment.DeploymentTests.test_bootstrap_login_and_restart_preserve_existing_password) ... ok
+test_demo_seed_does_not_mix_with_existing_patient_or_historical_record (test_deployment.DeploymentTests.test_demo_seed_does_not_mix_with_existing_patient_or_historical_record) ... ok
+test_demo_seed_is_realistic_idempotent_and_preserves_existing_records (test_deployment.DeploymentTests.test_demo_seed_is_realistic_idempotent_and_preserves_existing_records) ... ok
+test_empty_mounted_vector_directory_does_not_call_embedding (test_deployment.DeploymentTests.test_empty_mounted_vector_directory_does_not_call_embedding) ... ok
+test_environment_overrides_dotenv_and_handles_password_symbols (test_deployment.DeploymentTests.test_environment_overrides_dotenv_and_handles_password_symbols) ... ok
+test_health_checks_database_and_reports_unavailability (test_deployment.DeploymentTests.test_health_checks_database_and_reports_unavailability) ... ok
+test_empty_existing_collection_does_not_invoke_embedding (test_rag.RagTests.test_empty_existing_collection_does_not_invoke_embedding) ... E:\Thesis\thesis medical\.venv\Lib\site-packages\chromadb\types.py:144: PydanticDeprecatedSince211: Accessing the 'model_fields' attribute on the instance is deprecated. Instead, you should access this attribute from the model class. Deprecated in Pydantic V2.11 to be removed in V3.0.
+  return self.model_fields  # pydantic 2.x
+ok
+test_existing_legacy_collection_can_be_loaded (test_rag.RagTests.test_existing_legacy_collection_can_be_loaded) ... ok
+test_failed_embedding_does_not_write_partial_documents (test_rag.RagTests.test_failed_embedding_does_not_write_partial_documents) ... ok
+test_question_uses_retrieved_context_and_returns_sources (test_rag.RagTests.test_question_uses_retrieved_context_and_returns_sources) ... ok
+test_random_signing_key_is_persisted_and_placeholder_is_not_used (test_rag.RagTests.test_random_signing_key_is_persisted_and_placeholder_is_not_used) ... ok
+test_upload_persists_and_repeated_upload_does_not_duplicate (test_rag.RagTests.test_upload_persists_and_repeated_upload_does_not_duplicate) ... ok
+test_clean_legacy_tables_receive_both_constraints (test_schema_mysql.LegacySchemaTests.test_clean_legacy_tables_receive_both_constraints) ... skipped '仅显式启用时使用随机 MySQL 测试库'
+test_constraints_are_applied_after_conflicts_are_resolved (test_schema_mysql.LegacySchemaTests.test_constraints_are_applied_after_conflicts_are_resolved) ... skipped '仅显式启用时使用随机 MySQL 测试库'
+test_duplicate_numbers_only_defer_unique_constraint (test_schema_mysql.LegacySchemaTests.test_duplicate_numbers_only_defer_unique_constraint) ... skipped '仅显式启用时使用随机 MySQL 测试库'
+test_orphan_records_do_not_prevent_startup_or_get_reassigned (test_schema_mysql.LegacySchemaTests.test_orphan_records_do_not_prevent_startup_or_get_reassigned) ... skipped '仅显式启用时使用随机 MySQL 测试库'
+test_all_business_routes_require_authentication (test_system.SystemTests.test_all_business_routes_require_authentication) ... ok
+test_analytics_use_database_and_fill_empty_dates (test_system.SystemTests.test_analytics_use_database_and_fill_empty_dates) ... ok
+test_chat_stream_delivers_events_before_model_finishes_and_masks_errors (test_system.SystemTests.test_chat_stream_delivers_events_before_model_finishes_and_masks_errors) ... [2026-11-12 08:49:59,319] WARNING in rag_controller: RAG request failed: RuntimeError
+ok
+test_database_failure_rolls_back_and_next_request_succeeds (test_system.SystemTests.test_database_failure_rolls_back_and_next_request_succeeds) ... [2026-11-12 08:49:59,621] WARNING in app: Database request failed: OperationalError
+ok
+test_disabled_accounts_cannot_login_or_use_existing_tokens (test_system.SystemTests.test_disabled_accounts_cannot_login_or_use_existing_tokens) ... ok
+test_edit_and_undo_preserve_ids_timestamps_and_relations (test_system.SystemTests.test_edit_and_undo_preserve_ids_timestamps_and_relations) ... ok
+test_empty_knowledge_base_never_calls_models (test_system.SystemTests.test_empty_knowledge_base_never_calls_models) ... ok
+test_expired_forged_and_malformed_tokens_are_rejected (test_system.SystemTests.test_expired_forged_and_malformed_tokens_are_rejected) ... ok
+test_invalid_json_and_missing_login_fields_return_400 (test_system.SystemTests.test_invalid_json_and_missing_login_fields_return_400) ... ok
+test_legacy_password_migrates_without_password_reset (test_system.SystemTests.test_legacy_password_migrates_without_password_reset) ... ok
+test_medical_record_requires_an_existing_patient (test_system.SystemTests.test_medical_record_requires_an_existing_patient) ... ok
+test_missing_and_oversized_deletion_ids_are_safe (test_system.SystemTests.test_missing_and_oversized_deletion_ids_are_safe) ... ok
+test_missing_embedding_key_returns_clear_service_error (test_system.SystemTests.test_missing_embedding_key_returns_clear_service_error) ... ok
+test_oversized_http_payload_returns_413 (test_system.SystemTests.test_oversized_http_payload_returns_413) ... ok
+test_password_change_invalidates_old_tokens_and_accepts_new_password (test_system.SystemTests.test_password_change_invalidates_old_tokens_and_accepts_new_password) ... ok
+test_password_change_rejects_wrong_short_and_identical_passwords (test_system.SystemTests.test_password_change_rejects_wrong_short_and_identical_passwords) ... ok
+test_patient_optional_age_and_generated_number (test_system.SystemTests.test_patient_optional_age_and_generated_number) ... ok
+test_patient_undo_preserves_original_archive (test_system.SystemTests.test_patient_undo_preserves_original_archive) ... ok
+test_patient_validation_and_duplicate_numbers (test_system.SystemTests.test_patient_validation_and_duplicate_numbers) ... ok
+test_patient_with_records_is_protected_then_can_be_deleted (test_system.SystemTests.test_patient_with_records_is_protected_then_can_be_deleted) ... ok
+test_rag_errors_do_not_leak_upstream_secrets (test_system.SystemTests.test_rag_errors_do_not_leak_upstream_secrets) ... [2026-11-12 08:50:06,674] WARNING in rag_controller: RAG request failed: RuntimeError
+ok
+test_rag_whitespace_and_type_validation (test_system.SystemTests.test_rag_whitespace_and_type_validation) ... ok
+test_security_headers_and_restricted_cors (test_system.SystemTests.test_security_headers_and_restricted_cors) ... ok
+test_stats_are_derived_from_database (test_system.SystemTests.test_stats_are_derived_from_database) ... ok
+test_stream_upload_reports_actual_phases_and_parser_failure (test_system.SystemTests.test_stream_upload_reports_actual_phases_and_parser_failure) ... ok
+test_undo_is_scoped_to_owner_expiration_and_existing_patient (test_system.SystemTests.test_undo_is_scoped_to_owner_expiration_and_existing_patient) ... ok
+test_unknown_api_and_wrong_method_return_json_errors (test_system.SystemTests.test_unknown_api_and_wrong_method_return_json_errors) ... ok
+test_upload_missing_wrong_extension_encoding_and_empty_file (test_system.SystemTests.test_upload_missing_wrong_extension_encoding_and_empty_file) ... ok
+test_user_list_requires_admin_role (test_system.SystemTests.test_user_list_requires_admin_role) ... ok
+test_utf8_bom_upload_preserves_safe_source_name (test_system.SystemTests.test_utf8_bom_upload_preserves_safe_source_name) ... ok
+
+----------------------------------------------------------------------
+Ran 46 tests in 14.025s
+
+OK (skipped=4)

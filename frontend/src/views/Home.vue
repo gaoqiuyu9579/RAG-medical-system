@@ -12,12 +12,14 @@
     </div>
 
     <!-- 统计卡片 -->
-    <div class="stats-grid">
+    <el-alert v-if="loadError" :title="loadError" type="error" :closable="false"><el-button link @click="loadStats">重新加载</el-button></el-alert>
+    <el-skeleton v-if="loading" :rows="5" animated />
+    <div v-else class="stats-grid">
       <div class="stat-card card-blue">
         <div class="stat-icon">👥</div>
         <div class="stat-info">
           <span class="stat-label">患者总数</span>
-          <span class="stat-value">{{ stats.patientCount }}</span>
+          <span class="stat-value"><CountUp :value="stats.patientCount" /></span>
         </div>
         <div class="stat-trend">已登记患者</div>
       </div>
@@ -26,7 +28,7 @@
         <div class="stat-icon">🩺</div>
         <div class="stat-info">
           <span class="stat-label">今日病历</span>
-          <span class="stat-value">{{ stats.todayVisit }}</span>
+          <span class="stat-value"><CountUp :value="stats.todayVisit" /></span>
         </div>
         <div class="stat-trend">今日录入记录</div>
       </div>
@@ -35,7 +37,7 @@
         <div class="stat-icon">📋</div>
         <div class="stat-info">
           <span class="stat-label">病历总数</span>
-          <span class="stat-value">{{ stats.recordCount }}</span>
+          <span class="stat-value"><CountUp :value="stats.recordCount" /></span>
         </div>
         <div class="stat-trend">已保存病历</div>
       </div>
@@ -44,7 +46,7 @@
         <div class="stat-icon">🤖</div>
         <div class="stat-info">
           <span class="stat-label">知识片段</span>
-          <span class="stat-value">{{ stats.knowledgeChunks }}</span>
+          <span class="stat-value"><CountUp :value="stats.knowledgeChunks" /></span>
         </div>
         <div class="stat-trend">可检索医学资料</div>
       </div>
@@ -54,6 +56,7 @@
     <div class="quick-links">
       <h3 class="section-title">快捷操作</h3>
       <div class="link-grid">
+        <router-link to="/statistics" class="link-card"><span class="link-icon">📈</span><span class="link-text">统计分析</span></router-link>
         <router-link to="/patient" class="link-card">
           <span class="link-icon">➕</span>
           <span class="link-text">新增患者</span>
@@ -76,6 +79,8 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { getStats } from '../api/user'
 import { getKnowledgeStatus } from '../api/rag'
 import { getStoredUser } from '../utils/auth'
+import CountUp from '../components/CountUp.vue'
+const loading = ref(true), loadError = ref('')
 
 const stats = ref({ patientCount: 0, todayVisit: 0, recordCount: 0, knowledgeChunks: 0 })
 const currentTime = ref('')
@@ -94,9 +99,13 @@ function updateTime() {
   })
 }
 
-function loadStats() {
-  getStats().then(res => { Object.assign(stats.value, res.data) }).catch(() => {})
-  getKnowledgeStatus().then(res => { stats.value.knowledgeChunks = res.data.chunks }).catch(() => {})
+async function loadStats() {
+  loading.value = true
+  const results = await Promise.allSettled([getStats(), getKnowledgeStatus()])
+  if (results[0].status === 'fulfilled') Object.assign(stats.value, results[0].value.data)
+  if (results[1].status === 'fulfilled') stats.value.knowledgeChunks = results[1].value.data.chunks
+  loadError.value = results.filter(result => result.status === 'rejected').map(result => result.reason.message).join('；')
+  loading.value = false
 }
 
 onMounted(() => {
@@ -261,7 +270,7 @@ onUnmounted(() => {
 
 .link-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 

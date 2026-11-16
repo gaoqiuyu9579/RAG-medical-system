@@ -4,6 +4,7 @@ from backend.config.database import db
 from backend.model.medical_record import MedicalRecord
 from backend.model.patient import Patient
 from backend.utils.validation import ApiError
+from backend.service.recycle_service import remember_deleted
 
 
 class MedicalService:
@@ -32,6 +33,22 @@ class MedicalService:
         record = db.session.get(MedicalRecord, record_id)
         if record is None:
             return False
+        receipt = remember_deleted(record, "medical")
         db.session.delete(record)
         db.session.commit()
-        return True
+        return receipt
+
+    @staticmethod
+    def update_record(record_id, data):
+        if record_id > 9223372036854775807:
+            raise ApiError("病历不存在", 404)
+        patient = Patient.query.filter_by(id=data["patient_id"]).with_for_update().first()
+        if patient is None:
+            raise ApiError("患者不存在，请重新选择", 404)
+        record = MedicalRecord.query.filter_by(id=record_id).with_for_update().first()
+        if record is None:
+            raise ApiError("病历不存在", 404)
+        for key, value in data.items():
+            setattr(record, key, value)
+        db.session.commit()
+        return record.to_dict()

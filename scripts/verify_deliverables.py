@@ -78,7 +78,17 @@ def main():
     if "Audio: aac" not in audio_info or "Video: h264" not in audio_info:
         raise ValueError("Expected H.264 video and AAC narration")
     evidence = json.loads((ROOT / required[10]).read_text(encoding="utf-8"))
-    if evidence["ai_mode"] != "real-configured-clients" or len(evidence["events"]) != 8:
+    scenes = {item["scene"] for item in evidence["events"]}
+    if evidence["ai_mode"] != "real-configured-clients" or not {
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+    }.issubset(scenes):
         raise ValueError("Real demo evidence incomplete")
     tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT).decode().split("\0")
     risky = []

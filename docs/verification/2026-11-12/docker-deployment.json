@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-12",
+  "normal": {
+    "sys_user": 1,
+    "patient": 1,
+    "medical_record": 1,
+    "orphan_records": 0,
+    "duplicate_patient_numbers": 0,
+    "knowledge_chunks": 54,
+    "signing_key_fingerprint": "f772406b33613287"
+  },
+  "demo": {
+    "sys_user": 1,
+    "patient": 12,
+    "medical_record": 56,
+    "orphan_records": 0,
+    "duplicate_patient_numbers": 0,
+    "knowledge_chunks": 0,
+    "signing_key_fingerprint": "29f08860c74d71a5"
+  },
+  "synchronizedPythonFiles": 43,
+  "normalRestartSessionVerified": true,
+  "readonlyChecksPerDeployment": 8
+}

@@ -26,6 +26,18 @@ body,
   box-sizing: border-box;
 }
 
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+.page-enter-active, .page-leave-active { transition: opacity .22s ease, transform .22s ease; }
+.page-enter-from { opacity: 0; transform: translateY(8px); }.page-leave-to { opacity: 0; transform: translateY(-6px); }
+.el-table .recently-saved > td.el-table__cell { animation: saved-row 2.8s ease-out; }
+@keyframes saved-row { 0%,25% { background-color: #bdebd5; } 100% { background-color: transparent; } }
+.validation-shake .el-form-item.is-error { animation: validation-shake .4s; }
+@keyframes validation-shake { 20%,60% { transform: translateX(-5px); } 40%,80% { transform: translateX(5px); } }
+.danger-confirm .el-message-box__message { color: #c53030; line-height: 1.8; }
+.save-error { margin-bottom: 18px; }
+.table-card { transition: box-shadow .25s; }
+@media(prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
 .el-dialog { max-width: calc(100vw - 24px); }
 @media (max-width: 768px) {
   .page-header { gap: 12px; flex-wrap: wrap; }

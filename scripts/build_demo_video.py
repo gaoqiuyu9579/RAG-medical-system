@@ -49,11 +49,11 @@ def slide(chapter):
         draw.text((154, y), line, font=font(39), fill="#e3eef5")
     draw.text(
         (110, 924),
-        "智慧医疗问诊平台  |  合成数据演示  |  2026-10-22",
+        "智慧医疗问诊平台  |  合成数据演示  |  2026-11-11",
         font=font(24),
         fill="#92afc0",
     )
-    draw.text((1735, 916), chapter["id"] + " / 12", font=font(30), fill="#67d9d1")
+    draw.text((1735, 916), chapter["id"] + " / 13", font=font(30), fill="#67d9d1")
     path = TEMP / (chapter["id"] + ".png")
     image.save(path)
     return path
@@ -144,6 +144,12 @@ def main():
         with wave.open(str(audio)) as wav:
             speech_seconds = wav.getnframes() / wav.getframerate()
         duration = round(max(float(chapter["duration"]), speech_seconds + 1.2), 2)
+        if chapter["kind"] == "capture":
+            probe = imageio_ffmpeg.read_frames(str(VIDEO / "raw" / (identifier + ".webm")))
+            try:
+                duration = max(duration, next(probe)["duration"] + 0.5)
+            finally:
+                probe.close()
         subtitle_path = subtitles(chapter, speech_seconds, offset, srt)
         destination = segments / (identifier + ".mp4")
         common_filter = (

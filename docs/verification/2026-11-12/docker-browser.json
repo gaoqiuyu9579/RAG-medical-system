@@ -1,0 +1,23 @@
+{
+  "dockerBrowser": "passed",
+  "url": "http://127.0.0.1:8081",
+  "patients": 12,
+  "records": 56,
+  "ranges": [
+    {
+      "days": 7,
+      "periodRecords": 13
+    },
+    {
+      "days": 90,
+      "periodRecords": 56
+    },
+    {
+      "days": 30,
+      "periodRecords": 56
+    }
+  ],
+  "requiredFieldFocus": true,
+  "emptyKnowledgeSSE": true,
+  "browserErrors": []
+}

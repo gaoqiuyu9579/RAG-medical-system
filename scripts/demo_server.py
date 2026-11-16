@@ -13,6 +13,7 @@ from backend.config.database import db
 from backend.model.user import User
 from backend.utils.passwords import hash_password
 import backend.rag.vector_store as vectors
+from deploy.demo_data import seed_demo_data
 
 
 def main():
@@ -27,17 +28,18 @@ def main():
         }
     )
     with app.app_context():
-        if User.query.filter_by(username="reviewer").first() is None:
+        if User.query.filter_by(username="admin").first() is None:
             db.session.add(
                 User(
-                    username="reviewer",
-                    password=hash_password("ReviewDemo2026!"),
+                    username="admin",
+                    password=hash_password("admin123456"),
                     real_name="评审演示账号",
                     role="admin",
                     status=1,
                 )
             )
             db.session.commit()
+        seed_demo_data()
     print(
         json.dumps(
             {

@@ -1,0 +1,132 @@
+ Image smart-medical-demo-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 515B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.48kB done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.11-slim-bookworm
+#3 DONE 0.3s
+
+#4 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#4 DONE 0.4s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 449B done
+#5 DONE 0.0s
+
+#6 [python-build 1/5] FROM docker.io/library/python:3.11-slim-bookworm@sha256:a83ba18aef0f865b1a4a611c2cf460fe446f2795673bbb9fe43be570439e3b39
+#6 resolve docker.io/library/python:3.11-slim-bookworm@sha256:a83ba18aef0f865b1a4a611c2cf460fe446f2795673bbb9fe43be570439e3b39 0.0s done
+#6 DONE 0.0s
+
+#7 [frontend-build 1/8] FROM docker.io/library/node:22-bookworm-slim@sha256:e9f565d32859f0cbfb52125eafe8be39390f24dac302dc3cdf566e8ba3ab21ee
+#7 resolve docker.io/library/node:22-bookworm-slim@sha256:e9f565d32859f0cbfb52125eafe8be39390f24dac302dc3cdf566e8ba3ab21ee 0.0s done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 4.10kB 0.0s done
+#8 DONE 0.0s
+
+#9 [runtime 2/8] RUN apt-get update     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libstdc++6 libgomp1 tzdata     && rm -rf /var/lib/apt/lists/*     && useradd --create-home --uid 10001 appuser
+#9 CACHED
+
+#10 [runtime 4/8] COPY --from=python-build /opt/venv /opt/venv
+#10 CACHED
+
+#11 [runtime 5/8] COPY --chown=appuser:appuser backend ./backend
+#11 CACHED
+
+#12 [runtime 7/8] COPY --from=frontend-build --chown=appuser:appuser /build/frontend/dist ./frontend/dist
+#12 CACHED
+
+#13 [python-build 2/5] RUN apt-get update     && apt-get install -y --no-install-recommends build-essential     && rm -rf /var/lib/apt/lists/*
+#13 CACHED
+
+#14 [frontend-build 3/8] COPY frontend/package.json frontend/package-lock.json ./
+#14 CACHED
+
+#15 [frontend-build 5/8] COPY frontend/index.html frontend/vite.config.js ./
+#15 CACHED
+
+#16 [frontend-build 8/8] RUN npm run build
+#16 CACHED
+
+#17 [runtime 6/8] COPY --chown=appuser:appuser deploy ./deploy
+#17 CACHED
+
+#18 [python-build 3/5] WORKDIR /build
+#18 CACHED
+
+#19 [frontend-build 2/8] WORKDIR /build/frontend
+#19 CACHED
+
+#20 [python-build 4/5] COPY requirements.txt requirements-docker.txt ./
+#20 CACHED
+
+#21 [frontend-build 4/8] RUN npm ci
+#21 CACHED
+
+#22 [python-build 5/5] RUN python -m venv /opt/venv     && /opt/venv/bin/pip install --no-cache-dir -r requirements-docker.txt     && /opt/venv/bin/pip check
+#22 CACHED
+
+#23 [frontend-build 6/8] COPY frontend/src ./src
+#23 CACHED
+
+#24 [frontend-build 7/8] COPY frontend/public ./public
+#24 CACHED
+
+#25 [runtime 3/8] WORKDIR /app
+#25 CACHED
+
+#26 [runtime 8/8] RUN mkdir -p /app/backend/chroma_db /app/instance     && chown appuser:appuser /app/backend/chroma_db /app/instance
+#26 CACHED
+
+#27 exporting to image
+#27 exporting layers done
+#27 exporting manifest sha256:22996ec443132650a3d770f95a4f0b170f9ff2fd4504cf95b2df4ace44d84c69 0.0s done
+#27 exporting config sha256:6ffddfedc118638e5b490d4a80f9fd04a9d03ad2c1f366029cc7653205b67153 0.0s done
+#27 exporting attestation manifest sha256:b325367290b63db305e8d05cbdf194acfbb0e58c0294dfbdd3a2aac2b2355dce 0.0s done
+#27 exporting manifest list sha256:1570fb99d8f9f5295c1344eb979c021225ece6a7bfc1a166bf436c5cf8187ed3
+#27 exporting manifest list sha256:1570fb99d8f9f5295c1344eb979c021225ece6a7bfc1a166bf436c5cf8187ed3 0.0s done
+#27 naming to docker.io/library/smart-medical-demo-app:latest done
+#27 unpacking to docker.io/library/smart-medical-demo-app:latest done
+#27 DONE 0.1s
+
+#28 resolving provenance for metadata file
+#28 DONE 0.0s
+ Image smart-medical-demo-app Built 
+ Network smart-medical-demo_default Creating 
+ Network smart-medical-demo_default Creating 
+ Volume smart-medical-demo_chroma_data Creating 
+ Volume smart-medical-demo_mysql_data Creating 
+ Volume smart-medical-demo_chroma_data Creating 
+ Volume smart-medical-demo_mysql_data Creating 
+ Volume smart-medical-demo_instance_data Creating 
+ Volume smart-medical-demo_instance_data Creating 
+ Volume smart-medical-demo_instance_data Created 
+ Volume smart-medical-demo_instance_data Created 
+ Volume smart-medical-demo_chroma_data Created 
+ Volume smart-medical-demo_chroma_data Created 
+ Volume smart-medical-demo_mysql_data Created 
+ Volume smart-medical-demo_mysql_data Created 
+ Network smart-medical-demo_default Created 
+ Network smart-medical-demo_default Created 
+ Container smart-medical-demo-mysql-1 Creating 
+ Container smart-medical-demo-mysql-1 Created 
+ Container smart-medical-demo-app-1 Creating 
+ Container smart-medical-demo-app-1 Created 
+ Container smart-medical-demo-mysql-1 Starting 
+ Container smart-medical-demo-mysql-1 Started 
+ Container smart-medical-demo-mysql-1 Waiting 
+ Container smart-medical-demo-mysql-1 Healthy 
+ Container smart-medical-demo-app-1 Starting 
+ Container smart-medical-demo-app-1 Started 
+ Container smart-medical-demo-app-1 Waiting 
+ Container smart-medical-demo-mysql-1 Waiting 
+ Container smart-medical-demo-mysql-1 Healthy 
+ Container smart-medical-demo-app-1 Healthy 
+Ready: http://localhost:8081
+Demo login: admin / Admin123456 (synthetic data, separate volumes).
+Stop with: .\start.ps1 stop (add -Demo for the demo deployment).

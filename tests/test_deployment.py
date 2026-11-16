@@ -125,6 +125,41 @@ class DeploymentTests(unittest.TestCase):
             self.assertIsNone(load_vector_store())
             embedding.assert_not_called()
 
+    def test_demo_seed_is_realistic_idempotent_and_preserves_existing_records(self):
+        from backend.model.medical_record import MedicalRecord
+        from backend.model.patient import Patient
+        from deploy.demo_data import seed_demo_data
+
+        with self.app.app_context():
+            self.assertTrue(seed_demo_data())
+            self.assertEqual(Patient.query.count(), 12)
+            self.assertEqual(MedicalRecord.query.count(), 56)
+            patient = Patient.query.filter_by(name="张某某").one()
+            self.assertEqual(patient.age, 65)
+            self.assertTrue(patient.phone)
+            self.assertTrue(patient.address)
+            self.assertIn("高血压", patient.medical_history)
+            self.assertFalse(seed_demo_data())
+            self.assertEqual(MedicalRecord.query.count(), 56)
+
+    def test_demo_seed_does_not_mix_with_existing_patient_or_historical_record(self):
+        from backend.model.medical_record import MedicalRecord
+        from backend.model.patient import Patient
+        from deploy.demo_data import seed_demo_data
+
+        with self.app.app_context():
+            db.session.add(Patient(name="已有档案", patient_no="EXISTING"))
+            db.session.commit()
+            self.assertFalse(seed_demo_data())
+            self.assertEqual(Patient.query.count(), 1)
+            self.assertEqual(MedicalRecord.query.count(), 0)
+            Patient.query.delete()
+            db.session.add(MedicalRecord(patient_id=999, diagnosis="历史待核对病历"))
+            db.session.commit()
+            self.assertFalse(seed_demo_data())
+            self.assertEqual(Patient.query.count(), 0)
+            self.assertEqual(MedicalRecord.query.count(), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

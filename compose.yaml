@@ -47,6 +47,7 @@ services:
       DASHSCOPE_BASE_URL: ${DASHSCOPE_BASE_URL:-https://dashscope.aliyuncs.com/compatible-mode/v1}
       BOOTSTRAP_ADMIN_USERNAME: ${DOCKER_ADMIN_USERNAME:-admin}
       BOOTSTRAP_ADMIN_PASSWORD: ${DOCKER_ADMIN_PASSWORD:-Admin123456}
+      BOOTSTRAP_DEMO_DATA: ${DOCKER_SEED_DEMO_DATA:-0}
     volumes:
       - chroma_data:/app/backend/chroma_db
       - instance_data:/app/instance
